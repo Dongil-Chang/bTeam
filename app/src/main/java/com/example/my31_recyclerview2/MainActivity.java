@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     SingerAdapter adapter;
     ArrayList<SingerDTO> dtos;
 	int a = 0;
+	String aaaaa = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
