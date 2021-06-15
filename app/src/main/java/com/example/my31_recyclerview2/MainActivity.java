@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     SingerAdapter adapter;
     ArrayList<SingerDTO> dtos;
-
+	int a = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
