@@ -33,16 +33,16 @@ import java.time.Instant;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
     Button btn_login , btn_sign;
+    Toolbar toolbar;
+    Frag_Login fragLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar;
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

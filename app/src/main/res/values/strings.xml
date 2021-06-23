@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MySsProject02</string>
+    <string name="app_name">소소한 스토리지</string>
     <string name="title_activity_navbar">Navbar</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
