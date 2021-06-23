@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view"
-    >
+    tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_main"
             android:title="메인화면" />
         <item
-            android:id="@+id/nav_order"
-            android:title="주문하기" />
+            android:id="@+id/nav_reservation"
+            android:title="예약하기" />
         <item
             android:id="@+id/nav_notice"
             android:title="공지사항" />
@@ -26,9 +24,6 @@
             android:id="@+id/nav_mypage"
             android:title="마이페이지" />
     </group>
-
-
-
-    </menu>
+</menu>
 
 

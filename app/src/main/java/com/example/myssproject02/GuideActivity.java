@@ -60,7 +60,7 @@ public class GuideActivity extends AppCompatActivity implements  NavigationView.
             Toast.makeText(this, "메인화면 눌림", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(GuideActivity.this , MainActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_order) {
+        } else if (id == R.id.nav_reservation) {
             Toast.makeText(this, "주문하기 눌림", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_notice) {
             Toast.makeText(this, "공지사항 눌림", Toast.LENGTH_SHORT).show();
