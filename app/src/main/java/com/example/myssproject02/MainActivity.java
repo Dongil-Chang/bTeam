@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    DrawerLayout drawerLayout;
     Button btn_login , btn_sign;
     Toolbar toolbar;
     FragLogin fragLogin;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         fragLogin = new FragLogin();
         fragJoin = new FragJoin();
         fragReservation = new FragReservation();
-
+        drawerLayout = findViewById(R.id.drawer_layout); // drawlayout
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity
               /*Intent intent = new Intent( MainActivity.this ,GuideActivity.class);
               startActivity(intent);*/
                 onFragmentChange("login");
+                drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
             }
         });
 
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 onFragmentChange("join");
+                drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
             }
         });
 
