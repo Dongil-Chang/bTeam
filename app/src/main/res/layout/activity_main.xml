@@ -38,6 +38,7 @@
 
         </LinearLayout>-->
 
+
         <include
             layout="@layout/toolbar"
             android:id="@+id/toolbar" />
@@ -45,6 +46,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="55dp"
             android:id="@+id/container"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
