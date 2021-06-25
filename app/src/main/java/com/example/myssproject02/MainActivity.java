@@ -4,16 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -28,10 +33,20 @@ public class MainActivity extends AppCompatActivity
     FragJoin fragJoin;
     FragReservation fragReservation;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
 
         fragLogin = new FragLogin();
         fragJoin = new FragJoin();
@@ -60,6 +75,8 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
             }
         });
+
+
 
 
         //툴바의 타이틀
@@ -98,6 +115,12 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
+
+
+
+
+
 
     // Fragment 이동 메소드
     public void onFragmentChange(String frag) {

@@ -10,21 +10,40 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class GuideActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
-
+    Button btn_login;
+    Button btn_sign;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
 
+
+
         Toolbar toolbar;
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        btn_login = findViewById(R.id.btn_login);
+        btn_sign = findViewById(R.id.btn_sign);
+
+        btn_sign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GuideActivity.this , FragJoin.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
 
         //툴바의 타이틀
