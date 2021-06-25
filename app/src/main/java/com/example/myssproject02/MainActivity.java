@@ -6,44 +6,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.Navigation;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.NavigationMenu;
-import com.google.android.material.internal.NavigationMenuItemView;
-import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.time.Instant;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
+    DrawerLayout drawerLayout;
     Button btn_login , btn_sign;
+    Toolbar toolbar;
+    FragLogin fragLogin;
+    FragJoin fragJoin;
+    FragReservation fragReservation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar;
-
+        fragLogin = new FragLogin();
+        fragJoin = new FragJoin();
+        fragReservation = new FragReservation();
+        drawerLayout = findViewById(R.id.drawer_layout); // drawlayout
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,8 +46,18 @@ public class MainActivity extends AppCompatActivity
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Intent intent = new Intent( MainActivity.this ,GuideActivity.class);
-              startActivity(intent);
+              /*Intent intent = new Intent( MainActivity.this ,GuideActivity.class);
+              startActivity(intent);*/
+                onFragmentChange("login");
+                drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
+            }
+        });
+
+        btn_sign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFragmentChange("join");
+                drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
             }
         });
 
@@ -96,6 +99,19 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    // Fragment 이동 메소드
+    public void onFragmentChange(String frag) {
+        if(frag.equalsIgnoreCase("login")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragLogin ).commit();
+        } else if(frag.equalsIgnoreCase("join")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragJoin).commit();
+        } else if((frag.equalsIgnoreCase("reservation"))) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragReservation).commit();
+        } /*else if(flag == 3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();*/
+         // if ~ else
+    } // onFragmentChange()
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -104,8 +120,9 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "메인화면 눌림", Toast.LENGTH_SHORT).show();
 
         } 
-        else if(id == R.id.nav_order){
-            Toast.makeText(this, "주문하기 눌림", Toast.LENGTH_SHORT).show();
+        else if(id == R.id.nav_reservation) {
+            Toast.makeText(this, "예약하기 눌림", Toast.LENGTH_SHORT).show();
+            onFragmentChange("reservation");
         } 
         else if(id == R.id.nav_notice){
             Toast.makeText(this, "공지사항 눌림", Toast.LENGTH_SHORT).show();
