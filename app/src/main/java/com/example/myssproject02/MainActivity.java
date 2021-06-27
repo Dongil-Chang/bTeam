@@ -7,12 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,52 +34,77 @@ public class MainActivity extends AppCompatActivity
     FragLogin fragLogin;
     FragJoin fragJoin;
     FragReservation fragReservation;
+    FragPrntIdPwFind fragPrntIdPwFind;
+    FragPrntMyPage fragPrntMyPage;
+    AccountFrag fragAccount;
+    FragMainPage fragMainPage;
+    FragReservationSubBox fragReservationSubBox;
+    FragReservationSubCabi fragReservationSubCabi;
+
+    // Fragment selected = null;   fragment 전환 시 사용할 변수
 
 
-
+    // Navigation Drawer 가 열린 상태에서 뒤로가기 버튼 클릭시 앱이 종료되는 것을 방지하고
+    // 드로어가 열린 상태에서 뒤로가기 버튼 클릭시 드로어가 닫히도록 처리
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawers();
+          // Toast.makeText(this, "back btn Clicked", Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        } // if ~ else
+    }  // onBackPressed()
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
-
-
-
         fragLogin = new FragLogin();
         fragJoin = new FragJoin();
         fragReservation = new FragReservation();
+        fragPrntIdPwFind = new FragPrntIdPwFind();
+        fragPrntMyPage = new FragPrntMyPage();
+        fragAccount = new AccountFrag();
+        fragMainPage = new FragMainPage();
+        fragReservationSubBox = new FragReservationSubBox();
+        fragReservationSubCabi = new FragReservationSubCabi();
+
+        // Main
+        getSupportFragmentManager().beginTransaction().add(R.id.container, fragMainPage).addToBackStack(null).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragMainPage).addToBackStack(null).commit();
+
         drawerLayout = findViewById(R.id.drawer_layout); // drawlayout
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         btn_login = findViewById(R.id.btn_login);
         btn_sign = findViewById(R.id.btn_sign);
 
+        // 로그인 버튼 클릭시
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               /*Intent intent = new Intent( MainActivity.this ,GuideActivity.class);
               startActivity(intent);*/
-                onFragmentChange("login");
+                onFragmentChange(fragLogin);
                 drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
+
             }
         });
 
+
+
+        // 회원가입 버튼 클릭시
         btn_sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onFragmentChange("join");
+                onFragmentChange(fragJoin);
                 drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
             }
         });
-
-
-
 
         //툴바의 타이틀
 
@@ -90,11 +117,7 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,drawer,toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
-
-        );
+                this,drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -111,28 +134,44 @@ public class MainActivity extends AppCompatActivity
         }else if(userLevel == 1){
             navigationView.getMenu().findItem(R.id.nav_guide).setVisible(true);
         }
-
-
-
     }
 
-
-
-
-
-
-
-    // Fragment 이동 메소드
+    /*// Fragment 이동 메소드
     public void onFragmentChange(String frag) {
         if(frag.equalsIgnoreCase("login")) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragLogin ).commit();
+            selected = fragLogin;
         } else if(frag.equalsIgnoreCase("join")){
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragJoin).commit();
+            selected = fragJoin;
+            //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragJoin).addToBackStack(null).commit();
         } else if((frag.equalsIgnoreCase("reservation"))) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragReservation).commit();
-        } /*else if(flag == 3) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();*/
-         // if ~ else
+            selected = fragReservation;
+        } else if((frag.equalsIgnoreCase("find_id_pw"))) {
+            selected = fragPrntIdPwFind;
+        } else if((frag.equalsIgnoreCase("mypage"))) {
+            selected = fragPrntMyPage;
+        } else if((frag.equalsIgnoreCase("pwcheck"))) {
+            selected = fragAccount;
+        } else if ((frag.equalsIgnoreCase("mainpage"))) {
+            selected = fragMainPage;
+        } // if ~ else if
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, selected ).addToBackStack(null).commit();
+        // 공통 코드 정리 및 .addToBackStack(null) 추가 기입
+    } // onFragmentChange()*/
+
+    // Fragment 이동 메소드
+    public void onFragmentChange(Fragment frag) {
+        if(frag.equals(fragLogin)) {
+        } else if(frag.equals(fragJoin)) {
+        } else if(frag.equals(fragReservation)) {
+        } else if(frag.equals(fragPrntIdPwFind)) {
+        } else if(frag.equals(fragPrntMyPage)) {
+        } else if(frag.equals(fragAccount)) {
+        } else if (frag.equals(fragMainPage)) {
+        } else if (frag.equals(fragReservationSubBox)) {
+        } else if (frag.equals(fragReservationSubCabi)) {
+        } // if ~ else if
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, frag ).addToBackStack(null).commit();
+        // 공통 코드 정리 및 .addToBackStack(null) 추가 기입
     } // onFragmentChange()
 
     @Override
@@ -141,11 +180,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_main){
             Toast.makeText(this, "메인화면 눌림", Toast.LENGTH_SHORT).show();
-
+            onFragmentChange(fragMainPage);
         } 
         else if(id == R.id.nav_reservation) {
             Toast.makeText(this, "예약하기 눌림", Toast.LENGTH_SHORT).show();
-            onFragmentChange("reservation");
+            onFragmentChange(fragReservation);
         } 
         else if(id == R.id.nav_notice){
             Toast.makeText(this, "공지사항 눌림", Toast.LENGTH_SHORT).show();
@@ -155,21 +194,16 @@ public class MainActivity extends AppCompatActivity
         }
         else if(id == R.id.nav_guide){
             Toast.makeText(this, "이용 안내 눌림", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(MainActivity.this , GuideActivity.class);
-            startActivity(intent);
+            /*Intent intent = new Intent(MainActivity.this , GuideActivity.class);
+            startActivity(intent);*/
         }
         else if(id == R.id.nav_mypage){
             Toast.makeText(this, "마이페이지 눌림", Toast.LENGTH_SHORT).show();
+            onFragmentChange(fragPrntMyPage);
         }
-
-
-
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-
-
-    }
-}
+    } // onNavigationItemSelected()
+} // End of class

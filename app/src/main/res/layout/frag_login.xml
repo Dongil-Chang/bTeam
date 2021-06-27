@@ -8,6 +8,7 @@
     android:background="@color/white">
 
     <Button
+        android:id="@+id/btn_login_back"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@android:drawable/ic_menu_close_clear_cancel"

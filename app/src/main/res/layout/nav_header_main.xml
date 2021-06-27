@@ -7,9 +7,7 @@
     android:gravity="bottom"
     android:layout_marginTop="20dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:background="@drawable/side_nav_bar"
-
-    >
+    android:background="@drawable/side_nav_bar">
 
     <ImageView
         android:id="@+id/loginImage"

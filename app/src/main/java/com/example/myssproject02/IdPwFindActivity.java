@@ -36,9 +36,9 @@ public class IdPwFindActivity extends AppCompatActivity {
                     selected = idfrag;
                 } else if(temp_pos == 1) {
                     selected = pwfrag;
-                }
+                } // if ~ else if
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
-            }
+            } // onTabSelected()
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -50,5 +50,5 @@ public class IdPwFindActivity extends AppCompatActivity {
 
             }
         });
-    }
+    } // onCreate()
 }

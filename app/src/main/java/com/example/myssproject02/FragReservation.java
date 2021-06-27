@@ -14,14 +14,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class FragReservation extends Fragment {
-    MainActivity m_activity;
+    MainActivity mActivity;
     ViewGroup rootView;
+    FragReservationSubBox fragReservationSubBox;
+    FragReservationSubCabi fragReservationSubCabi;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.frag_reservation, container, false);
-        m_activity = (MainActivity) getActivity();
+        mActivity = (MainActivity) getActivity();
+        fragReservationSubBox = new FragReservationSubBox();
+        fragReservationSubCabi = new FragReservationSubCabi();
 
         Spinner location = (Spinner) rootView.findViewById(R.id.location);
         ArrayAdapter locationAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -34,6 +38,7 @@ public class FragReservation extends Fragment {
             public void onClick(View v) {
                /* Intent intent = new Intent(ReservationActivity.this, ReservationSubBox.class);
                 startActivity(intent);*/
+                mActivity.onFragmentChange(fragReservationSubBox);
             }
         });
 
@@ -42,6 +47,7 @@ public class FragReservation extends Fragment {
             public void onClick(View v) {
                /* Intent intent = new Intent(ReservationActivity.this, ReservationSubCabi.class);
                 startActivity(intent);*/
+                mActivity.onFragmentChange(fragReservationSubCabi);
             }
         });
 
