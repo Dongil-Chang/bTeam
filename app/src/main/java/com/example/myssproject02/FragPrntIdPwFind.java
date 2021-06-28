@@ -14,7 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 
-import me.relex.circleindicator.CircleIndicator3;
+
 
 public class FragPrntIdPwFind extends Fragment implements View.OnClickListener {
 
