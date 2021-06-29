@@ -45,9 +45,10 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
     //인터넷에서 그림 바로 땡겨오기
-    implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.8.0'
-    /* ViewPager2 사용 */
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     /* CircleIndicator 사용 */
     implementation 'me.relex:circleindicator:2.1.4'
 

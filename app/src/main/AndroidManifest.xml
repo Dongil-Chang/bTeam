@@ -13,9 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ImageSliderAdapter" />
-        <activity android:name=".GuideActivity" />
-        <activity android:name=".IdPwFindActivity" />
+
         <activity android:name=".Loding">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
