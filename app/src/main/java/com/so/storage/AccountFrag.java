@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
+// 마이 페이지 내 개인 정보 수정 실제 페이지
 public class AccountFrag extends Fragment {
     @Nullable
     @Override

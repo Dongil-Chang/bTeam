@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.tabs.TabLayout;
 
 
-
+// 로그인 페이지 내 아이디/패스워드 찾기 페이지
 public class FragPrntIdPwFind extends Fragment implements View.OnClickListener {
 
     TabLayout tabs;

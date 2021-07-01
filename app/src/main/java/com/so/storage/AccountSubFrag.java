@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+// 마이 페이지 내 개인 정보 수정을 위한 비밀번호 확인 페이지
 public class AccountSubFrag extends Fragment {
     MainActivity mActivity;
     Button btn_accountsub_ok;

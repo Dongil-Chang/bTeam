@@ -8,6 +8,7 @@
     android:background="@color/white">
 
     <Button
+        android:id="@+id/btn_pw_email_find"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -17,6 +18,7 @@
         android:backgroundTint="#89CFCE" />
 
     <Button
+        android:id="@+id/btn_pw_tel_find"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_gravity="center"

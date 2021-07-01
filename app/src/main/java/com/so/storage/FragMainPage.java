@@ -72,13 +72,10 @@ public class FragMainPage extends Fragment {
             }
         }, DELAY_MS, PERIOD_MS);
 
-
-
-
-
         return rootView;
     } // onCreateView()
 
+    // 슬라이드 내 위치 표식 둥근 아이콘 설정
     private void setupIndicators(int count) {
         ImageView[] indicators = new ImageView[count];
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -96,6 +93,7 @@ public class FragMainPage extends Fragment {
         setCurrentIndicator(0);
     }
 
+    // 선택 또는 보여지는 슬라이드 내 둥근 아이콘 색상 구분
     private void setCurrentIndicator(int position) {
         int childCount = layoutIndicator.getChildCount();
         for (int i = 0; i < childCount; i++) {
