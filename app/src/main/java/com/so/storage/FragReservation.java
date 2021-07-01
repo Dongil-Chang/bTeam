@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,12 +22,6 @@ public class FragReservation extends Fragment {
         mActivity = (MainActivity) getActivity();
         fragReservationSubBox = new FragReservationSubBox();
         fragReservationSubCabi = new FragReservationSubCabi();
-
-        Spinner location = (Spinner) rootView.findViewById(R.id.location);
-        ArrayAdapter locationAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.location, android.R.layout.simple_spinner_item);
-        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        location.setAdapter(locationAdapter);
 
         rootView.findViewById(R.id.btn_box).setOnClickListener(new View.OnClickListener() {
             @Override
