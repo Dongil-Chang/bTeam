@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity
     FragReservation fragReservation;
     FragPrntIdPwFind fragPrntIdPwFind;
     FragPrntMyPage fragPrntMyPage;
-    AccountFrag fragAccount;
+    FragPrntInfoUse fragPrntInfoUse;
+    MyAccountFrag fragAccount;
     FragMainPage fragMainPage;
     FragReservationSubBox fragReservationSubBox;
     FragReservationSubCabi fragReservationSubCabi;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawers();
-          // Toast.makeText(this, "back btn Clicked", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "back btn Clicked", Toast.LENGTH_SHORT).show();
         } else {
             super.onBackPressed();
         } // if ~ else
@@ -58,7 +59,8 @@ public class MainActivity extends AppCompatActivity
         fragReservation = new FragReservation();
         fragPrntIdPwFind = new FragPrntIdPwFind();
         fragPrntMyPage = new FragPrntMyPage();
-        fragAccount = new AccountFrag();
+        fragPrntInfoUse = new FragPrntInfoUse();
+        fragAccount = new MyAccountFrag();
         fragMainPage = new FragMainPage();
         fragReservationSubBox = new FragReservationSubBox();
         fragReservationSubCabi = new FragReservationSubCabi();
@@ -161,7 +163,9 @@ public class MainActivity extends AppCompatActivity
         } else if (frag.equals(fragMainPage)) {
         } else if (frag.equals(fragReservationSubBox)) {
         } else if (frag.equals(fragReservationSubCabi)) {
-        } // if ~ else if
+        } else if (frag.equals(fragPrntInfoUse)) {
+        }
+        // if ~ else if
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag ).addToBackStack(null).commit();
         // 공통 코드 정리 및 .addToBackStack(null) 추가 기입
     } // onFragmentChange()
@@ -173,11 +177,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_main){
             Toast.makeText(this, "메인화면 눌림", Toast.LENGTH_SHORT).show();
             onFragmentChange(fragMainPage);
-        } 
+        }
         else if(id == R.id.nav_reservation) {
             Toast.makeText(this, "예약하기 눌림", Toast.LENGTH_SHORT).show();
             onFragmentChange(fragReservation);
-        } 
+        }
         else if(id == R.id.nav_notice){
             Toast.makeText(this, "공지사항 눌림", Toast.LENGTH_SHORT).show();
         }
@@ -188,6 +192,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "이용 안내 눌림", Toast.LENGTH_SHORT).show();
             /*Intent intent = new Intent(MainActivity.this , GuideActivity.class);
             startActivity(intent);*/
+            onFragmentChange(fragPrntInfoUse);
         }
         else if(id == R.id.nav_mypage){
             Toast.makeText(this, "마이페이지 눌림", Toast.LENGTH_SHORT).show();

@@ -14,11 +14,11 @@ import com.google.android.material.tabs.TabLayout;
 public class FragPrntMyPage extends Fragment  implements View.OnClickListener  {
 
     TabLayout mypageTab;
-    StorageFrag storageFrag;
-    ReservationFrag reservationFrag;
-    AccountFrag accountFrag;
-    AccountSubFrag accountSubFrag;
-    MemberLeaveFrag memberLeaveFrag;
+    MyStorageFrag myStorageFrag;
+    MyReservationFrag myReservationFrag;
+    MyAccountFrag myAccountFrag;
+    MyAccountSubFrag myAccountSubFrag;
+    MyMemberLeaveFrag myMemberLeaveFrag;
     Fragment selected = null;
 
     ViewGroup rootView;
@@ -33,17 +33,17 @@ public class FragPrntMyPage extends Fragment  implements View.OnClickListener  {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.frag_prnt_mypage, container, false);
 
-        storageFrag = new StorageFrag();            // 내 창고
-        reservationFrag = new ReservationFrag();    // 이용내역
-        accountFrag = new AccountFrag();            // 비밀번호 확인(정보수정 페이지 전환 전)
-        accountSubFrag = new AccountSubFrag();      // 정보수정
-        memberLeaveFrag = new MemberLeaveFrag();    // 회원탈퇴
+        myStorageFrag = new MyStorageFrag();            // 내 창고
+        myReservationFrag = new MyReservationFrag();    // 예약내역
+        myAccountFrag = new MyAccountFrag();            // 비밀번호 확인(정보수정 페이지 전환 전)
+        myAccountSubFrag = new MyAccountSubFrag();      // 정보수정
+        myMemberLeaveFrag = new MyMemberLeaveFrag();    // 회원탈퇴
 
-        getChildFragmentManager().beginTransaction().replace(R.id.mcontainer, storageFrag).addToBackStack(null).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.mcontainer, myStorageFrag).addToBackStack(null).commit();
 
         mypageTab = rootView.findViewById(R.id.mypageTab);
         mypageTab.addTab(mypageTab.newTab().setText("내창고"));
-        mypageTab.addTab(mypageTab.newTab().setText("이용내역"));
+        mypageTab.addTab(mypageTab.newTab().setText("예약내역"));
         mypageTab.addTab(mypageTab.newTab().setText("정보수정"));
         mypageTab.addTab(mypageTab.newTab().setText("회원탈퇴"));
 
@@ -52,13 +52,13 @@ public class FragPrntMyPage extends Fragment  implements View.OnClickListener  {
             public void onTabSelected(TabLayout.Tab tab) {
                 int temp_pos = tab.getPosition();
                 if(temp_pos == 0) {
-                    selected = storageFrag;
+                    selected = myStorageFrag;
                 } else if(temp_pos == 1) {
-                    selected = reservationFrag;
+                    selected = myReservationFrag;
                 } else if(temp_pos == 2) {
-                    selected = accountSubFrag;
+                    selected = myAccountSubFrag;
                 } else if(temp_pos == 3) {
-                    selected = memberLeaveFrag;
+                    selected = myMemberLeaveFrag;
                 }
                 getChildFragmentManager().beginTransaction().replace(R.id.mcontainer, selected).commit();
             } // onTabSelected()

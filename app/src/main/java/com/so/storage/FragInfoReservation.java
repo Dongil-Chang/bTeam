@@ -9,13 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-
-// 마이 페이지 내 개인 정보 수정 실제 페이지
-public class AccountFrag extends Fragment {
+public class FragInfoReservation extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_account, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_info_reservation, container, false);
 
         return rootView;
     }

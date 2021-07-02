@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class MemberLeaveFrag extends Fragment {
+public class FragInfoIot extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_memberleave, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_info_iot, container, false);
 
         return rootView;
     }
