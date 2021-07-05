@@ -16,6 +16,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    /*데이터 바인딩 사용시 선언*/
+    buildFeatures{
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -56,4 +61,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
+
+    // RecyclerView 라이브러리
+    implementation 'com.balysv:material-ripple:1.0.2' // for ripple effect
 }

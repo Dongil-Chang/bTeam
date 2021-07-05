@@ -1,4 +1,4 @@
-package com.so.storage;
+package com.so.storage.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.so.storage.DTO.ReservationDTO;
+import com.so.storage.R;
 
 import java.util.ArrayList;
 

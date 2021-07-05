@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.so.storage.Manager.FragMgMemberList;
 
 
 public class MainActivity extends AppCompatActivity
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity
     FragMainPage fragMainPage;
     FragReservationSubBox fragReservationSubBox;
     FragReservationSubCabi fragReservationSubCabi;
+    FragMgMemberList fragMgMemberList;
+    FragNotice fragNotice;
 
     // Fragment selected = null;   fragment 전환 시 사용할 변수
 
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         fragMainPage = new FragMainPage();
         fragReservationSubBox = new FragReservationSubBox();
         fragReservationSubCabi = new FragReservationSubCabi();
+        fragMgMemberList = new FragMgMemberList();
+        fragNotice = new FragNotice();
 
         // Main
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragMainPage).addToBackStack(null).commit();
@@ -88,8 +93,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
-
 
         // 회원가입 버튼 클릭시
         btn_sign.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +167,8 @@ public class MainActivity extends AppCompatActivity
         } else if (frag.equals(fragReservationSubBox)) {
         } else if (frag.equals(fragReservationSubCabi)) {
         } else if (frag.equals(fragPrntInfoUse)) {
+        } else if (frag.equals(fragMgMemberList)) {
+        } else if (frag.equals(fragNotice)) {
         }
         // if ~ else if
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag ).addToBackStack(null).commit();
@@ -184,15 +189,18 @@ public class MainActivity extends AppCompatActivity
         }
         else if(id == R.id.nav_notice){
             Toast.makeText(this, "공지사항 눌림", Toast.LENGTH_SHORT).show();
+            onFragmentChange(fragNotice);
         }
         else if(id == R.id.nav_event){
             Toast.makeText(this, "이벤트 눌림", Toast.LENGTH_SHORT).show();
+            onFragmentChange(fragMgMemberList);
         }
         else if(id == R.id.nav_guide){
             Toast.makeText(this, "이용 안내 눌림", Toast.LENGTH_SHORT).show();
             /*Intent intent = new Intent(MainActivity.this , GuideActivity.class);
             startActivity(intent);*/
             onFragmentChange(fragPrntInfoUse);
+
         }
         else if(id == R.id.nav_mypage){
             Toast.makeText(this, "마이페이지 눌림", Toast.LENGTH_SHORT).show();
