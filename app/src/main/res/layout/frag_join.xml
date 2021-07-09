@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/join_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -32,58 +33,123 @@
             android:layout_gravity="center"
             android:text="회 원 가 입"
             android:gravity="center"
-            android:layout_marginTop="-20dp"
+            android:layout_marginTop="-5dp"
             android:textSize="30dp" />
 
         <EditText
+            android:id="@+id/edt_join_id"
             android:layout_width="370dp"
             android:layout_height="40dp"
-            android:background="@drawable/edt_border"
+            android:background="@drawable/gray_edittext"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:hint="아이디(5~12자의 영문 소문자, 숫자)"
             android:gravity="center"
-            android:textSize="16dp"/>
+            android:maxLength="12"
+            android:textSize="16dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/txtv_join_id"
+            android:layout_width="360dp"
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:layout_height="15dp"
+            android:textSize="12dp"
+            android:textColor="#FF0000"
+            android:visibility="invisible"/>
 
         <EditText
+            android:id="@+id/edt_join_pw"
             android:layout_width="370dp"
             android:layout_height="40dp"
-            android:background="@drawable/edt_border"
+            android:background="@drawable/gray_edittext"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="1dp"
             android:hint="비밀번호(8~20자의 영문 대소문자, 숫자, (@,!,*,?)"
             android:textSize="16dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:inputType="textPassword"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/txtv_join_pw"
+            android:layout_width="360dp"
+            android:layout_height="15dp"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:textColor="#FF0000"
+            android:visibility="invisible" />
 
         <EditText
+            android:id="@+id/edt_join_pwchk"
             android:layout_width="370dp"
             android:layout_height="40dp"
-            android:background="@drawable/edt_border"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/gray_edittext"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:hint="비밀번호 확인"
             android:textSize="16dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:inputType="textPassword"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/txtv_join_pwchk"
+            android:layout_width="360dp"
+            android:layout_height="15dp"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:textColor="#FF0000"
+            android:visibility="invisible"/>
 
         <EditText
+            android:id="@+id/edt_join_name"
             android:layout_width="370dp"
             android:layout_height="40dp"
-            android:background="@drawable/edt_border"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/gray_edittext"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:hint="이름"
             android:textSize="16dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:inputType="text"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/txtv_join_name"
+            android:layout_width="360dp"
+            android:layout_height="15dp"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:textColor="#FF0000"
+            android:visibility="invisible"/>
 
         <EditText
+            android:id="@+id/edt_join_email"
             android:layout_width="370dp"
             android:layout_height="40dp"
-            android:background="@drawable/edt_border"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/gray_edittext"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:hint="이메일"
             android:textSize="16dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/txtv_join_email"
+            android:layout_width="360dp"
+            android:layout_height="15dp"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:textColor="#FF0000"
+            android:visibility="invisible"/>
 
         <!--<LinearLayout
             android:layout_width="400dp"
@@ -126,22 +192,27 @@
             android:gravity="center"/>-->
 
         <EditText
+            android:id="@+id/edt_join_tel"
             android:layout_width="370dp"
             android:layout_height="40dp"
-            android:background="@drawable/edt_border"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/gray_edittext"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:hint="연락처"
             android:textSize="16dp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:inputType="number"
+            android:singleLine="true"/>
 
         <TextView
+            android:id="@+id/txtv_join_tel"
             android:layout_width="370dp"
-            android:layout_height="20dp"
+            android:layout_height="15dp"
+            android:textSize="12dp"
             android:layout_gravity="center"
-            android:text="* 숫자만 입력해주세요."
             android:gravity="right"
-            android:textColor="#383DC9"/>
+            android:textColor="#ff0000"
+            android:visibility="invisible"/>
 
         <!--<TextView
             android:layout_width="400dp"

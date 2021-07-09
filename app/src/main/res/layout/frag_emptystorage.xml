@@ -3,13 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
-    android:background="#fff"
     android:orientation="vertical">
-=======
-    android:orientation="vertical"
-    android:background="#fff">
->>>>>>> b4b85f98012237d9eb48b060d870fe820c3ad83c
 
     <TextView
         android:layout_width="match_parent"

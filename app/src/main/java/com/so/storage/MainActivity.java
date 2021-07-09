@@ -8,21 +8,30 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 
+import android.util.Patterns;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.so.storage.Manager.FragMgMemberList;
 
+import java.util.regex.Pattern;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
-    Button btn_login , btn_sign;
+    Button btn_login;
     Toolbar toolbar;
     FragLogin fragLogin;
     FragJoin fragJoin;
@@ -36,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     FragReservationSubCabi fragReservationSubCabi;
     FragMgMemberList fragMgMemberList;
     FragNotice fragNotice;
+    private View header;
 
     // Fragment selected = null;   fragment 전환 시 사용할 변수
 
@@ -76,32 +86,26 @@ public class MainActivity extends AppCompatActivity
 
         drawerLayout = findViewById(R.id.drawer_layout); // drawlayout
 
+        // 다른 위치 레이아웃 생성
+        //header = getLayoutInflater().inflate(R.layout.nav_header_main, null, false);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        btn_login = findViewById(R.id.btn_login);
-        btn_sign = findViewById(R.id.btn_sign);
 
-        // 로그인 버튼 클릭시
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              /*Intent intent = new Intent( MainActivity.this ,GuideActivity.class);
-              startActivity(intent);*/
-                onFragmentChange(fragLogin);
-                drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
+        // btn_login = findViewById(R.id.btn_login);
+        // btn_sign = findViewById(R.id.btn_sign);
 
-            }
-        });
 
-        // 회원가입 버튼 클릭시
+
+       /* // 회원가입 버튼 클릭시
         btn_sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onFragmentChange(fragJoin);
                 drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
             }
-        });
+        });*/
 
         //툴바의 타이틀
 
@@ -121,15 +125,35 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        header = navigationView.getHeaderView(0);
+        btn_login = (Button) header.findViewById(R.id.btn_login);
+
+        // 로그인 버튼 클릭시
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              /*Intent intent = new Intent( MainActivity.this ,GuideActivity.class);
+              startActivity(intent);*/
+                onFragmentChange(fragLogin);
+                drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
+
+            } // (btn_login) onClick
+        });
+
+
         int userLevel  = 1;
         String loginID = "admin";
         View headerView = navigationView.getHeaderView(0);
 
         if (userLevel == 0){
-            navigationView.getMenu().findItem(R.id.nav_guide).setVisible(false);
-
+            navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
+            navigationView.getMenu().findItem(R.id.managerinfo).setVisible(false);
         }else if(userLevel == 1){
-            navigationView.getMenu().findItem(R.id.nav_guide).setVisible(true);
+            navigationView.getMenu().findItem(R.id.myinfo).setVisible(true);
+            navigationView.getMenu().findItem(R.id.managerinfo).setVisible(false);
+        }else if(userLevel == 2){
+            navigationView.getMenu().findItem(R.id.managerinfo).setVisible(true);
+            navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
         }
     }
 
@@ -211,4 +235,153 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     } // onNavigationItemSelected()
+
+    public void validityChk() {
+        EditText edt_join_id, edt_join_pw, edt_join_pwchk, edt_join_name, edt_join_email, edt_join_tel;
+        TextView txtv_join_id, txtv_join_pw, txtv_join_pwchk, txtv_join_name, txtv_join_email, txtv_join_tel;
+
+        txtv_join_id = findViewById(R.id.txtv_join_id);
+        txtv_join_pw = findViewById(R.id.txtv_join_pw);
+        txtv_join_pwchk = findViewById(R.id.txtv_join_pwchk);
+        txtv_join_name = findViewById(R.id.txtv_join_name);
+        txtv_join_email = findViewById(R.id.txtv_join_email);
+        txtv_join_tel = findViewById(R.id.txtv_join_tel);
+
+        edt_join_id = findViewById(R.id.edt_join_id);
+        edt_join_pw = findViewById(R.id.edt_join_pw);
+        edt_join_pwchk = findViewById(R.id.edt_join_pwchk);
+        edt_join_name = findViewById(R.id.edt_join_name);
+        edt_join_email = findViewById(R.id.edt_join_email);
+        edt_join_tel = findViewById(R.id.edt_join_tel);
+
+
+        //------------------포커스 관련 처리해주면 가능할 것 같음------------------
+        if (Pattern.matches("^[a-z0-9]\\w{5,12}$", edt_join_id.getText().toString()) || edt_join_id.length() == 0) {
+            txtv_join_id.setText("");
+            edt_join_id.setBackgroundResource(R.drawable.gray_edittext);
+        } else if(!Pattern.matches("^[a-z0-9]\\w{5,12}$", edt_join_id.getText().toString())) {
+            txtv_join_id.setVisibility(View.VISIBLE);
+            txtv_join_id.setText("형식이 올바르지 않습니다.");
+            edt_join_id.setBackgroundResource(R.drawable.red_edittext);
+        } // 아이디
+
+        if (Pattern.matches("(?=.*[a-zA-ZS])(?=.*?[\\?\\!\\@\\*]).{8,20}", edt_join_pw.getText().toString()) || edt_join_pw.length() == 0) {
+            txtv_join_pw.setText("");
+            edt_join_pw.setBackgroundResource(R.drawable.gray_edittext);
+        } else if(!Pattern.matches("(?=.*[a-zA-ZS])(?=.*?[\\?\\!\\@\\*]).{8,20}", edt_join_pw.getText().toString())) {
+            txtv_join_pw.setVisibility(View.VISIBLE);
+            txtv_join_pw.setText("형식이 올바르지 않습니다.");
+            edt_join_pw.setBackgroundResource(R.drawable.red_edittext);
+        } // 비밀번호
+
+        if (Pattern.matches("^[가-힣]{2,5}$", edt_join_name.getText().toString()) || edt_join_name.length() == 0) {
+            txtv_join_name.setText("");
+            edt_join_name.setBackgroundResource(R.drawable.gray_edittext);
+        } else if(!Pattern.matches("^[가-힣]{2,5}$", edt_join_name.getText().toString())) {
+            txtv_join_name.setVisibility(View.VISIBLE);
+            txtv_join_name.setText("형식이 올바르지 않습니다.");
+            edt_join_name.setBackgroundResource(R.drawable.red_edittext);
+        } // 이름
+
+        if (Patterns.EMAIL_ADDRESS.matcher(edt_join_email.getText().toString()).matches() || edt_join_email.length() == 0) {
+            txtv_join_email.setText("");
+            edt_join_email.setBackgroundResource(R.drawable.gray_edittext);
+        } else if(!Patterns.EMAIL_ADDRESS.matcher(edt_join_email.getText().toString()).matches()) {
+            txtv_join_email.setVisibility(View.VISIBLE);
+            txtv_join_email.setText("형식이 올바르지 않습니다.");
+            edt_join_email.setBackgroundResource(R.drawable.red_edittext);
+        } // 이메일
+
+        if (Pattern.matches("^01(?:0|1|[6-9])\\d{3,4}\\d{4}$", edt_join_tel.getText().toString()) || edt_join_tel.length() == 0) {
+            txtv_join_tel.setText("");
+            edt_join_tel.setBackgroundResource(R.drawable.gray_edittext);
+        } else if(!Pattern.matches("^01(?:0|1|[6-9])\\d{3,4}\\d{4}$", edt_join_tel.getText().toString())) {
+            txtv_join_tel.setVisibility(View.VISIBLE);
+            txtv_join_tel.setText("형식이 올바르지 않습니다.");
+            edt_join_tel.setBackgroundResource(R.drawable.red_edittext);
+        } // 전화번호
+
+        /*if(edt_join_id.hasFocus()) {
+            //if(!Pattern.matches("^[a-z]\\w{4,11}$", edt_join_id.getText().toString())) {
+            if(!Pattern.matches("^[a-z0-9]\\w{5,12}$", edt_join_id.getText().toString())) {
+                txtv_join_id.setVisibility(View.VISIBLE);
+                edt_join_id.setBackgroundResource(R.drawable.red_edittext);
+                txtv_join_id.setText("형식이 올바르지 않습니다.");
+            } else {
+                txtv_join_id.setText("");
+                edt_join_id.setBackgroundResource(R.drawable.gray_edittext);
+                //txtv_join_id.setText(null);
+                //edt_join_id.clearFocus();
+            }//아이디
+        } else if(edt_join_pw.hasFocus()) {
+            if (!Pattern.matches("(?=.*[a-zA-ZS])(?=.*?[\\?\\!\\@\\*]).{8,20}", edt_join_pw.getText().toString())) {
+                txtv_join_pw.setVisibility(View.VISIBLE);
+                txtv_join_pw.setText("형식이 올바르지 않습니다.");
+            } else {
+                txtv_join_pw.setText(null);
+                edt_join_pw.clearFocus();
+            }//비밀번호
+        } else if(edt_join_name.hasFocus()) {
+            if (!Pattern.matches("^[가-힣]{2,5}$", edt_join_name.getText().toString())) {
+                txtv_join_name.setVisibility(View.VISIBLE);
+                txtv_join_name.setText("형식이 올바르지 않습니다.");
+            } else {
+                txtv_join_name.setText(null);
+                edt_join_name.clearFocus();
+            }//이름
+        } else if(edt_join_email.hasFocus()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(edt_join_email.getText().toString()).matches()) {
+                txtv_join_email.setVisibility(View.VISIBLE);
+                txtv_join_email.setText("형식이 올바르지 않습니다.");
+            } else {
+                txtv_join_email.setText(null);
+                edt_join_email.clearFocus();
+            }//이메일
+        } else if(edt_join_tel.hasFocus()) {
+            // if (!Pattern.matches("^(010|011|016|017|018|019)\\d{3,4}\\d{4}$", edt_join_tel.getText().toString())) {
+            if (!Pattern.matches("^01(?:0|1|[6-9])\\d{3,4}\\d{4}$", edt_join_tel.getText().toString())) {
+                txtv_join_tel.setVisibility(View.VISIBLE);
+                txtv_join_tel.setText("형식이 올바르지 않습니다.");
+            } else {
+                txtv_join_tel.setText(null);
+                edt_join_tel.clearFocus();
+            }//연락처
+        } // if ~ else if ~ else*/
+    } // validityChk()
+
+
+    // Fragment 내 EditText의 외부 클릭 즉, 포커스가 바뀌었을 때 키보드를 숨기기 위한 메소드
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)ev.getRawX(), (int)ev.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                } // if
+            } // if
+        } // if
+
+        return super.dispatchTouchEvent(ev);
+    } // dispatchTouchEvent()
+
+    public void pwChk(String pwchk) {
+        EditText edt_join_pw;
+        TextView txtv_join_pwchk;
+        txtv_join_pwchk = findViewById(R.id.txtv_join_pwchk);
+        edt_join_pw = findViewById(R.id.edt_join_pw);
+
+        String pw = edt_join_pw.getText().toString();
+        if(!pwchk.equals(pw)) {
+            txtv_join_pwchk.setVisibility(View.VISIBLE);
+            txtv_join_pwchk.setText("동일한 비밀번호를 입력하세요");
+        } else {
+            txtv_join_pwchk.setVisibility(View.VISIBLE);
+            txtv_join_pwchk.setText("비밀번호가 확인되었습니다.");
+        } // if ~ else
+    } // pkChk()
 } // End of class
