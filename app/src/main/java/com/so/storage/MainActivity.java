@@ -254,8 +254,6 @@ public class MainActivity extends AppCompatActivity
         edt_join_email = findViewById(R.id.edt_join_email);
         edt_join_tel = findViewById(R.id.edt_join_tel);
 
-
-        //------------------포커스 관련 처리해주면 가능할 것 같음------------------
         if (Pattern.matches("^[a-z0-9]\\w{5,12}$", edt_join_id.getText().toString()) || edt_join_id.length() == 0) {
             txtv_join_id.setText("");
             edt_join_id.setBackgroundResource(R.drawable.gray_edittext);
