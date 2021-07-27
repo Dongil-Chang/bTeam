@@ -9,9 +9,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Rect;
 import android.os.Bundle;
 
+import android.util.Base64;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -25,6 +30,8 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.so.storage.Manager.FragMgMemberList;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
 
@@ -79,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         fragReservationSubCabi = new FragReservationSubCabi();
         fragMgMemberList = new FragMgMemberList();
         fragNotice = new FragNotice();
+        Log.d("GET_KEYHASH",getKeyHash());
 
         // Main
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragMainPage).addToBackStack(null).commit();
@@ -156,6 +164,8 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
         }
     }
+
+
 
     /*// Fragment 이동 메소드
     public void onFragmentChange(String frag) {
@@ -382,4 +392,25 @@ public class MainActivity extends AppCompatActivity
             txtv_join_pwchk.setText("비밀번호가 확인되었습니다.");
         } // if ~ else
     } // pkChk()
+
+    // 키해시 얻기
+    public String getKeyHash(){
+        try{
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            if(packageInfo == null) return null;
+            for(Signature signature: packageInfo.signatures){
+                try{
+                    MessageDigest md = MessageDigest.getInstance("SHA");
+                    md.update(signature.toByteArray());
+                    return android.util.Base64.encodeToString(md.digest(), Base64.NO_WRAP);
+                }catch (NoSuchAlgorithmException e){
+                    Log.w("getKeyHash", "Unable to get MessageDigest. signature="+signature, e);
+                }
+            }
+        }catch(PackageManager.NameNotFoundException e){
+            Log.w("getPackageInfo", "Unable to getPackageInfo");
+        }
+        return null;
+    }
+
 } // End of class

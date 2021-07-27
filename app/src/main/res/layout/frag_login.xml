@@ -78,7 +78,7 @@
         android:backgroundTint="#89CFCE" />
 
     <ImageButton
-        android:id="@+id/imageButton7"
+        android:id="@+id/naver_login"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:src="@drawable/naver_login"
@@ -86,7 +86,7 @@
         android:layout_marginTop="5dp"/>
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/kakao_login"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:src="@drawable/kakao_login"
