@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 인터넷 연결 확인-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- WIFI 연결 확인-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:name=".GlobalApplication"
@@ -14,6 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="true" />
+
         <meta-data android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
@@ -32,10 +39,7 @@
                 <!--Redirect URI: "kakao{NATIVE_APP_KEY}://oauth"-->
                 <data
                     android:host="oauth"
-
                     android:scheme="kakao9b9dffff9c49fc3d12de1057c58352b8"/> <!--카카오 네이티브 앱 키값-->
-
-
 
             </intent-filter>
         </activity>

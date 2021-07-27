@@ -39,7 +39,7 @@ public class FragPrntMyPage extends Fragment  implements View.OnClickListener  {
         myAccountSubFrag = new MyAccountSubFrag();      // 정보수정
         myMemberLeaveFrag = new MyMemberLeaveFrag();    // 회원탈퇴
 
-        getChildFragmentManager().beginTransaction().replace(R.id.mcontainer, myStorageFrag).addToBackStack(null).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.mcontainer, myStorageFrag).commit();
 
         mypageTab = rootView.findViewById(R.id.mypageTab);
         mypageTab.addTab(mypageTab.newTab().setText("내창고"));

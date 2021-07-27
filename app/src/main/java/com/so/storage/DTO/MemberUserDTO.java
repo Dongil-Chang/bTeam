@@ -2,11 +2,19 @@ package com.so.storage.DTO;
 
 public class MemberUserDTO {
 
-    String member_code, id, pw, name, email, addr, tel, birth, naver_login, kakao_login, joindate, commcode, subcode;
+    String member_code, id, pw, name, email, addr, tel, birth, naver_login, kakao_login, commcode, subcode;
 
     public MemberUserDTO(){}
 
-    public MemberUserDTO(String member_code, String id, String pw, String name, String email, String addr, String tel, String birth, String naver_login, String kakao_login, String joindate, String commcode, String subcode) {
+    public MemberUserDTO(String id, String pw, String name, String email, String tel) {
+        this.id = id;
+        this.pw = pw;
+        this.name = name;
+        this.email = email;
+        this.tel = tel;
+    }
+
+    public MemberUserDTO(String member_code, String id, String pw, String name, String email, String addr, String tel, String birth, String naver_login, String kakao_login, String commcode, String subcode) {
         this.member_code = member_code;
         this.id = id;
         this.pw = pw;
@@ -17,7 +25,6 @@ public class MemberUserDTO {
         this.birth = birth;
         this.naver_login = naver_login;
         this.kakao_login = kakao_login;
-        this.joindate = joindate;
         this.commcode = commcode;
         this.subcode = subcode;
     }
@@ -100,14 +107,6 @@ public class MemberUserDTO {
 
     public void setKakao_login(String kakao_login) {
         this.kakao_login = kakao_login;
-    }
-
-    public String getJoindate() {
-        return joindate;
-    }
-
-    public void setJoindate(String joindate) {
-        this.joindate = joindate;
     }
 
     public String getCommcode() {

@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.so.storage.DTO.MemberUserDTO;
 import com.so.storage.Manager.FragMgMemberList;
 
 import java.security.MessageDigest;
@@ -37,6 +38,9 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static MemberUserDTO loginDTO = null;
+
     DrawerLayout drawerLayout;
     Button btn_login;
     Toolbar toolbar;

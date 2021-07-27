@@ -23,7 +23,10 @@ import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.Account;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.so.storage.ATask.LoginSelect;
 import com.so.storage.DTO.MemberUserDTO;
+
+import static com.so.storage.MainActivity.loginDTO;
 
 public class FragLogin extends Fragment {
     private static final String TAG = "";
@@ -37,9 +40,6 @@ public class FragLogin extends Fragment {
     OAuthLogin mOAuthLoginModule;
     Context mContext;
     ImageButton naver_login,kakao_login;
-
-
-
 
     @Nullable
     @Override
@@ -98,31 +98,37 @@ public class FragLogin extends Fragment {
             } // onClick()
         });
 
+        //로그인 버튼
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MemberUserDTO dto = new MemberUserDTO();
                 String id = edt_login_id.getText().toString();
                 String pw = edt_login_pw.getText().toString();
-                dto.setId(id);
-                dto.setPw(pw);
-                if(!edt_login_id.getText().toString().isEmpty() || !edt_login_pw.getText().toString().isEmpty()) {
-                    if(id.equals("userid") && pw.equals("userpw")) {
+                //dto.setId(id);
+                //dto.setPw(pw);
+                LoginSelect loginSelect = new LoginSelect(id, pw);
+                try {
+                    String result = loginSelect.execute().get();
+                    Log.d(TAG, "login onClick: " + result + ", " + loginDTO.getId()) ;
+
+                    if(!loginDTO.getId().equals("")) {
+                        //if (id.equals(loginDTO.getId()) && pw.equals(loginDTO.getPw())) {
                         Snackbar.make(v, "로그인 되었습니다.", Snackbar.LENGTH_LONG).show();
                         mActivity.onFragmentChange(fragMainPage);
+                        //}
                     } else {
                         Snackbar.make(v, "아이디, 비밀번호를 확인하세요.", Snackbar.LENGTH_LONG).show();
                         edt_login_id.setText(null);
                         edt_login_pw.setText(null);
                     }
-                } else {
-                    Snackbar.make(v, "아이디, 비밀번호를 확인하세요.", Snackbar.LENGTH_LONG).show();
-                }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } //try
             }
         });
 
         //네이버 로그인
-
         naver_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +157,6 @@ public class FragLogin extends Fragment {
                             Log.i("LoginData","refreshToken : "+ refreshToken);
                             Log.i("LoginData","expiresAt : "+ expiresAt);
                             Log.i("LoginData","tokenType : "+ tokenType);
-
                         } else {
                             String errorCode = mOAuthLoginModule
                                     .getLastErrorCode(mContext).getCode();
@@ -161,7 +166,6 @@ public class FragLogin extends Fragment {
                         }
                     };
                 };
-
                 mOAuthLoginModule.startOauthLoginActivity(getActivity(), mOAuthLoginHandler);
             }
         });
@@ -201,7 +205,6 @@ public class FragLogin extends Fragment {
             }
         });
 
-
         // 로그인 페이지 x 뒤로 가기 버튼 클릭시 메인 화면으로 돌아가는 이벤트
         btn_login_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,12 +212,8 @@ public class FragLogin extends Fragment {
                 mActivity.onFragmentChange(fragMainPage);
             }
         }); // btn_login_back
-
         return rootView;
-
     } // onCreateView
-
-
 
 } // class
 
