@@ -7,6 +7,7 @@ public class MemberUserDTO {
     public MemberUserDTO(){}
 
     public MemberUserDTO(String id, String pw, String name, String email, String tel) {
+        super();
         this.id = id;
         this.pw = pw;
         this.name = name;
@@ -15,6 +16,7 @@ public class MemberUserDTO {
     }
 
     public MemberUserDTO(String member_code, String id, String pw, String name, String email, String addr, String tel, String birth, String naver_login, String kakao_login, String commcode, String subcode) {
+        super();
         this.member_code = member_code;
         this.id = id;
         this.pw = pw;

@@ -1,6 +1,7 @@
 package com.so.storage;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class FragPrntMyPage extends Fragment  implements View.OnClickListener  {
+    private static final String TAG = "main:FragPrntMyPage";
 
     TabLayout mypageTab;
     MyStorageFrag myStorageFrag;
@@ -22,6 +24,13 @@ public class FragPrntMyPage extends Fragment  implements View.OnClickListener  {
     Fragment selected = null;
 
     ViewGroup rootView;
+
+    int callNum;
+
+    public FragPrntMyPage(int callNum) {
+        this.callNum = callNum;
+        Log.d(TAG, "FragPrntMyPage: " + callNum);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +80,13 @@ public class FragPrntMyPage extends Fragment  implements View.OnClickListener  {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
+        if(callNum == 7){
+            TabLayout.Tab tab = mypageTab.getTabAt(1);
+            tab.select();
+            callNum = -1;
+        }
+
         return rootView;
     } // onCreateView()
 

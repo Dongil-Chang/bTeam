@@ -1,20 +1,11 @@
 package com.so.storage;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Rect;
 import android.os.Bundle;
-
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
@@ -26,6 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 import com.so.storage.DTO.MemberUserDTO;
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     FragReservationSubCabi fragReservationSubCabi;
     FragMgMemberList fragMgMemberList;
     FragNotice fragNotice;
+    int callNum = 7;
     private View header;
 
     // Fragment selected = null;   fragment 전환 시 사용할 변수
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         fragJoin = new FragJoin();
         fragReservation = new FragReservation();
         fragPrntIdPwFind = new FragPrntIdPwFind();
-        fragPrntMyPage = new FragPrntMyPage();
+        fragPrntMyPage = new FragPrntMyPage(callNum);
         fragPrntInfoUse = new FragPrntInfoUse();
         fragAccount = new MyAccountFrag();
         fragMainPage = new FragMainPage();

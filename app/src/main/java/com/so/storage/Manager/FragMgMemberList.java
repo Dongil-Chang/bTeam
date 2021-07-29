@@ -39,10 +39,10 @@ public class FragMgMemberList extends Fragment {
 
         adapter = new MemberListAdapter();
 
-        adapter.addDto(new MemberUserDTO("1", "hanul", "1234", "홍길동", "abc@naver.com", "광주광역시", "010-1234-5678", "2000/07/01", "", "", "2021/07/01", "1", "1"));
+        /*adapter.addDto(new MemberUserDTO("1", "hanul", "1234", "홍길동", "abc@naver.com", "광주광역시", "010-1234-5678", "2000/07/01", "", "", "2021/07/01", "1", "1"));
         adapter.addDto(new MemberUserDTO("1", "hanul2", "1234", "이순신", "bcd@naver.com", "광주광역시", "010-9632-8547", "2001/06/04", "", "", "2021/07/01", "1", "1"));
 
-        listv_mg_member_list.setAdapter(adapter);
+        listv_mg_member_list.setAdapter(adapter);*/
 
         return rootView;
     } // onCreateView

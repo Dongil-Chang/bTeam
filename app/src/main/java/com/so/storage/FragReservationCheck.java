@@ -5,36 +5,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-
-public class FragReservationSubCabi extends Fragment {
-    ViewGroup rootView;
+public class FragReservationCheck extends Fragment {
     MainActivity mActivity;
-    FragReservationCheck fragReservationCheck;
-
+    ViewGroup rootView;
+    FragReservationFinal fragReservationFinal;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView =  (ViewGroup) inflater.inflate(R.layout.frag_reservation_sub_cabi, container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.frag_reservation_check, container, false);
         mActivity = (MainActivity) getActivity();
-        fragReservationCheck = new FragReservationCheck();
+        fragReservationFinal = new FragReservationFinal();
 
-
-        rootView.findViewById(R.id.btn_reser_cabi).setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.btn_reser_check).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                /* Intent intent = new Intent(ReservationActivity.this, ReservationSubBox.class);
                 startActivity(intent);*/
-                mActivity.onFragmentChange(fragReservationCheck);
+                mActivity.onFragmentChange(fragReservationFinal);
             }
         });
+
+
         return rootView;
     } // onCreateView()
-
-
-} // End of class
+}
