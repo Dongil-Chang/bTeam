@@ -26,11 +26,10 @@ import static com.so.storage.common.CommonMethod.project_path;
 //import org.apache.http.client.config.RequestConfig;
 
 //ATask 패키지에는 Spring과 통신하는 Asynk Task 들을 여기에 모두 넣음
-public class LoginSelect extends AsyncTask<Void, Void, String> {
+public class LeaveDelete extends AsyncTask<Void, Void, String> {
 
     private static final String TAG = "LoginSelect";
     String id;
-    String pw;
 
     //Spring 연결시 Http 통신할 때 필요한 것들
     //HttpURLConnection
@@ -39,9 +38,8 @@ public class LoginSelect extends AsyncTask<Void, Void, String> {
     HttpResponse httpResponse; //실제 요청하는 곳
     HttpEntity httpEntity; //파라미터나 기타 설정들이 들어가는 곳
 
-    public LoginSelect(String id, String pw) {
+    public LeaveDelete(String id) {
         this.id = id;
-        this.pw = pw;
     }
 
     //실제 Spring과 연결하여 어떤 데이터 작업이 일어나는 부분
@@ -49,37 +47,36 @@ public class LoginSelect extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... voids) {
         //Multipart 빌더를 생성
         try {
-            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-            //문자열 및 데이터 (조회 조건이나 insert시 필요한 데이터들을 넘길 때)
-            //Android -> Spring 으로 가는 데이터
-            builder.addTextBody("id", id, ContentType.create("Multipart/related","UTF-8"));
-            builder.addTextBody("pw", pw, ContentType.create("Multipart/related","UTF-8"));
+        //문자열 및 데이터 (조회 조건이나 insert시 필요한 데이터들을 넘길 때)
+        //Android -> Spring 으로 가는 데이터
+        builder.addTextBody("id", id, ContentType.create("Multipart/related","UTF-8"));
 
-            //Url 만들기
-            String postURL = ipconfig + project_path + "/and_login"; //바꿔줘야함
+        //Url 만들기
+        String postURL = ipconfig + project_path + "/and_leave"; //바꿔줘야함
 
-            InputStream inputStream = null;
-            httpClient = AndroidHttpClient.newInstance("Android");
-            //접속할 Url 초기화
-            httpPost = new HttpPost(postURL);
-            //조회 조건이나 데이터 설정들 넘겨줌
-            httpPost.setEntity(builder.build());
+        InputStream inputStream = null;
+        httpClient = AndroidHttpClient.newInstance("Android");
+        //접속할 Url 초기화
+        httpPost = new HttpPost(postURL);
+        //조회 조건이나 데이터 설정들 넘겨줌
+        httpPost.setEntity(builder.build());
 
-            //실제 Spring Url을 요청하는 부분
-            httpResponse = httpClient.execute(httpPost);
+        //실제 Spring Url을 요청하는 부분
+        httpResponse = httpClient.execute(httpPost);
 
-            //값을 Spring에서 받아오는 부분
-            httpEntity = httpResponse.getEntity();
-            //entity 이용해서 값을 받아오고 그리고 html로 리턴된 부분을 getContent이용해서받아옴
-            inputStream = httpEntity.getContent();
+       //값을 Spring에서 받아오는 부분
+        httpEntity = httpResponse.getEntity();
+        //entity 이용해서 값을 받아오고 그리고 html로 리턴된 부분을 getContent이용해서받아옴
+        inputStream = httpEntity.getContent();
             Log.d(TAG, "doInBackground: "+inputStream);
 
-            loginDTO = readMessage(inputStream);
+        loginDTO = readMessage(inputStream);
             Log.d(TAG, "doInBackground: "+loginDTO.getEmail());
 
-            inputStream.close();
+        inputStream.close();
 
         } catch (IOException e) {
             loginDTO = null;
@@ -100,7 +97,7 @@ public class LoginSelect extends AsyncTask<Void, Void, String> {
             }
         }
 
-        return "LoginSelect Complete!!!";
+        return "Complete!!!";
     }
 
     @Override

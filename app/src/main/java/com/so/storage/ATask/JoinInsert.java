@@ -48,48 +48,48 @@ public class JoinInsert extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         //Multipart 빌더를 생성
         try {
-        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-        //member_code, id, pw, name, email, addr, tel, birth, naver_login, kakao_login, commcode, subcode;
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            //member_code, id, pw, name, email, addr, tel, birth, naver_login, kakao_login, commcode, subcode;
 
-        //문자열 및 데이터 (조회 조건이나 insert시 필요한 데이터들을 넘길 때)
-        //Android -> Spring 으로 가는 데이터
-        //builder.addTextBody("member_code", dto.getMember_code(), ContentType.create("Multipart/related","UTF-8"));
-        builder.addTextBody("id", dto.getId(), ContentType.create("Multipart/related","UTF-8"));
-        builder.addTextBody("pw", dto.getPw(), ContentType.create("Multipart/related","UTF-8"));
-        builder.addTextBody("name", dto.getName(), ContentType.create("Multipart/related","UTF-8"));
-        builder.addTextBody("email", dto.getEmail(), ContentType.create("Multipart/related","UTF-8"));
-        //builder.addTextBody("addr", dto.getAddr(), ContentType.create("Multipart/related","UTF-8"));
-        builder.addTextBody("tel", dto.getTel(), ContentType.create("Multipart/related","UTF-8"));
-        //builder.addTextBody("birth", dto.getBirth(), ContentType.create("Multipart/related","UTF-8"));
-        //builder.addTextBody("naver_login", dto.getNaver_login(), ContentType.create("Multipart/related","UTF-8"));
-        //builder.addTextBody("kakao_login", dto.getKakao_login(), ContentType.create("Multipart/related","UTF-8"));
-        //builder.addTextBody("commcode", dto.getCommcode(), ContentType.create("Multipart/related","UTF-8"));
-        //builder.addTextBody("subcode", dto.getSubcode(), ContentType.create("Multipart/related","UTF-8"));
+            //문자열 및 데이터 (조회 조건이나 insert시 필요한 데이터들을 넘길 때)
+            //Android -> Spring 으로 가는 데이터
+            //builder.addTextBody("member_code", dto.getMember_code(), ContentType.create("Multipart/related","UTF-8"));
             builder.addTextBody("id", dto.getId(), ContentType.create("Multipart/related","UTF-8"));
+            builder.addTextBody("pw", dto.getPw(), ContentType.create("Multipart/related","UTF-8"));
+            builder.addTextBody("name", dto.getName(), ContentType.create("Multipart/related","UTF-8"));
+            builder.addTextBody("email", dto.getEmail(), ContentType.create("Multipart/related","UTF-8"));
+            //builder.addTextBody("addr", dto.getAddr(), ContentType.create("Multipart/related","UTF-8"));
+            builder.addTextBody("tel", dto.getTel(), ContentType.create("Multipart/related","UTF-8"));
+            //builder.addTextBody("birth", dto.getBirth(), ContentType.create("Multipart/related","UTF-8"));
+            //builder.addTextBody("naver_login", dto.getNaver_login(), ContentType.create("Multipart/related","UTF-8"));
+            //builder.addTextBody("kakao_login", dto.getKakao_login(), ContentType.create("Multipart/related","UTF-8"));
+            //builder.addTextBody("commcode", dto.getCommcode(), ContentType.create("Multipart/related","UTF-8"));
+            //builder.addTextBody("subcode", dto.getSubcode(), ContentType.create("Multipart/related","UTF-8"));
+            //  builder.addTextBody("id", dto.getId(), ContentType.create("Multipart/related","UTF-8"));
 
-        //Url 만들기
-        String postURL = ipconfig + project_path + "/and_join";
+            //Url 만들기
+            String postURL = ipconfig + project_path + "/and_join";
 
-        InputStream inputStream = null;
-        httpClient = AndroidHttpClient.newInstance("Android");
-        //접속할 Url 초기화
-        httpPost = new HttpPost(postURL);
-        //조회 조건이나 데이터 설정들 넘겨줌
-        httpPost.setEntity(builder.build());
-        //httpPost.setEntity(dto);
+            InputStream inputStream = null;
+            httpClient = AndroidHttpClient.newInstance("Android");
+            //접속할 Url 초기화
+            httpPost = new HttpPost(postURL);
+            //조회 조건이나 데이터 설정들 넘겨줌
+            httpPost.setEntity(builder.build());
+            //httpPost.setEntity(dto);
 
-        //실제 Spring Url을 요청하는 부분
-        httpResponse = httpClient.execute(httpPost);
+            //실제 Spring Url을 요청하는 부분
+            httpResponse = httpClient.execute(httpPost);
 
-        //값을 Spring에서 받아오는 부분
-        httpEntity = httpResponse.getEntity();
-        //entity 이용해서 값을 받아오고 그리고 html로 리턴된 부분을 getContent이용해서받아옴
-        inputStream = httpEntity.getContent();
+            //값을 Spring에서 받아오는 부분
+            httpEntity = httpResponse.getEntity();
+            //entity 이용해서 값을 받아오고 그리고 html로 리턴된 부분을 getContent이용해서받아옴
+            inputStream = httpEntity.getContent();
 
-        String result = readMessage(inputStream);
+            String result = readMessage(inputStream);
 
-        inputStream.close();
+            inputStream.close();
 
         } catch (IOException e) {
             loginDTO = null;

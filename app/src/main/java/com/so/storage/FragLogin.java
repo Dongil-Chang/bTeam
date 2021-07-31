@@ -25,6 +25,7 @@ import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.so.storage.ATask.LoginSelect;
 import com.so.storage.DTO.MemberUserDTO;
+import com.so.storage.common.SaveLogin;
 
 import static com.so.storage.MainActivity.loginDTO;
 
@@ -110,18 +111,29 @@ public class FragLogin extends Fragment {
                 LoginSelect loginSelect = new LoginSelect(id, pw);
                 try {
                     String result = loginSelect.execute().get();
-                    Log.d(TAG, "login onClick: " + result + ", " + loginDTO.getId()) ;
+                    // Log.d(TAG, "login onClick: " + result + ", " + loginDTO.getId()) ;
 
-                    if(!loginDTO.getId().equals("")) {
-                        //if (id.equals(loginDTO.getId()) && pw.equals(loginDTO.getPw())) {
-                        Snackbar.make(v, "로그인 되었습니다.", Snackbar.LENGTH_LONG).show();
-                        mActivity.onFragmentChange(fragMainPage);
-                        //}
+                    //if(!loginDTO.getId().equals("")) {
+                    if(loginDTO != null) {
+                        if (id.equals(loginDTO.getId()) && pw.equals(loginDTO.getPw())) {
+                            Snackbar.make(v, "로그인 되었습니다.", Snackbar.LENGTH_LONG).show();
+                            mActivity.onFragmentChange(fragMainPage);
+                            SaveLogin saveLogin = new SaveLogin();
+                            saveLogin.saveUserInfo(mActivity);
+                        } else if(!id.equals(loginDTO.getId()) || !pw.equals(loginDTO.getPw())){
+                            Snackbar.make(v, "아이디, 비밀번호를 확인하세요.", Snackbar.LENGTH_LONG).show();
+                            edt_login_id.setText("");
+                            edt_login_pw.setText("");
+                            edt_login_id.requestFocus();
+                        }
+
                     } else {
                         Snackbar.make(v, "아이디, 비밀번호를 확인하세요.", Snackbar.LENGTH_LONG).show();
                         edt_login_id.setText(null);
                         edt_login_pw.setText(null);
+                        edt_login_id.requestFocus();
                     }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 } //try

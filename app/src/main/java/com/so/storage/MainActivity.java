@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.navigation.NavigationView;
 import com.so.storage.DTO.MemberUserDTO;
 import com.so.storage.Manager.FragMgMemberList;
+import com.so.storage.common.SaveLogin;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -38,10 +39,13 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "main:";
     public static MemberUserDTO loginDTO = null;
 
+    TextView mystorage_name;
     DrawerLayout drawerLayout;
     Button btn_login;
+    Button btn_logout;
     Toolbar toolbar;
     FragLogin fragLogin;
     FragJoin fragJoin;
@@ -139,6 +143,7 @@ public class MainActivity extends AppCompatActivity
 
         header = navigationView.getHeaderView(0);
         btn_login = (Button) header.findViewById(R.id.btn_login);
+        btn_logout = (Button) header.findViewById(R.id.btn_logout);
 
         // 로그인 버튼 클릭시
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -147,11 +152,35 @@ public class MainActivity extends AppCompatActivity
               /*Intent intent = new Intent( MainActivity.this ,GuideActivity.class);
               startActivity(intent);*/
                 onFragmentChange(fragLogin);
+
+                //-----------------로그인시 로그인 버튼 로그아웃으로 바꾸는 처리(안됨) -----------
+                SaveLogin saveLogin = new SaveLogin();
+                String saveuserinfo = saveLogin.saveUserInfo(MainActivity.this);
+
+                if(!saveuserinfo.isEmpty()) {
+                    Log.d(TAG, saveuserinfo);
+
+                    btn_login.setVisibility(View.GONE);
+                    btn_logout.setVisibility(View.VISIBLE);
+                }
                 drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
 
             } // (btn_login) onClick
         });
 
+        //로그아웃 버튼
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveLogin saveLogin = new SaveLogin();
+
+                String logOut = saveLogin.logout(getApplicationContext());
+                btn_logout.setVisibility(View.GONE);
+                btn_login.setVisibility(View.VISIBLE);
+                drawerLayout.closeDrawers();
+                Log.d(TAG, logOut+"null");
+            }
+        });
 
         int userLevel  = 1;
         String loginID = "admin";
@@ -168,30 +197,6 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
         }
     }
-
-
-
-    /*// Fragment 이동 메소드
-    public void onFragmentChange(String frag) {
-        if(frag.equalsIgnoreCase("login")) {
-            selected = fragLogin;
-        } else if(frag.equalsIgnoreCase("join")){
-            selected = fragJoin;
-            //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragJoin).addToBackStack(null).commit();
-        } else if((frag.equalsIgnoreCase("reservation"))) {
-            selected = fragReservation;
-        } else if((frag.equalsIgnoreCase("find_id_pw"))) {
-            selected = fragPrntIdPwFind;
-        } else if((frag.equalsIgnoreCase("mypage"))) {
-            selected = fragPrntMyPage;
-        } else if((frag.equalsIgnoreCase("pwcheck"))) {
-            selected = fragAccount;
-        } else if ((frag.equalsIgnoreCase("mainpage"))) {
-            selected = fragMainPage;
-        } // if ~ else if
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, selected ).addToBackStack(null).commit();
-        // 공통 코드 정리 및 .addToBackStack(null) 추가 기입
-    } // onFragmentChange()*/
 
     // Fragment 이동 메소드
     public void onFragmentChange(Fragment frag) {
@@ -250,20 +255,19 @@ public class MainActivity extends AppCompatActivity
         return true;
     } // onNavigationItemSelected()
 
-    public void validityChk() {
+    // ----------------------- 회원가입 유효성 검사 -----------------------------------
+    public void join_validityChk() {
         EditText edt_join_id, edt_join_pw, edt_join_pwchk, edt_join_name, edt_join_email, edt_join_tel;
         TextView txtv_join_id, txtv_join_pw, txtv_join_pwchk, txtv_join_name, txtv_join_email, txtv_join_tel;
 
         txtv_join_id = findViewById(R.id.txtv_join_id);
         txtv_join_pw = findViewById(R.id.txtv_join_pw);
-        txtv_join_pwchk = findViewById(R.id.txtv_join_pwchk);
         txtv_join_name = findViewById(R.id.txtv_join_name);
         txtv_join_email = findViewById(R.id.txtv_join_email);
         txtv_join_tel = findViewById(R.id.txtv_join_tel);
 
         edt_join_id = findViewById(R.id.edt_join_id);
         edt_join_pw = findViewById(R.id.edt_join_pw);
-        edt_join_pwchk = findViewById(R.id.edt_join_pwchk);
         edt_join_name = findViewById(R.id.edt_join_name);
         edt_join_email = findViewById(R.id.edt_join_email);
         edt_join_tel = findViewById(R.id.edt_join_tel);
@@ -313,53 +317,59 @@ public class MainActivity extends AppCompatActivity
             edt_join_tel.setBackgroundResource(R.drawable.red_edittext);
         } // 전화번호
 
-        /*if(edt_join_id.hasFocus()) {
-            //if(!Pattern.matches("^[a-z]\\w{4,11}$", edt_join_id.getText().toString())) {
-            if(!Pattern.matches("^[a-z0-9]\\w{5,12}$", edt_join_id.getText().toString())) {
-                txtv_join_id.setVisibility(View.VISIBLE);
-                edt_join_id.setBackgroundResource(R.drawable.red_edittext);
-                txtv_join_id.setText("형식이 올바르지 않습니다.");
-            } else {
-                txtv_join_id.setText("");
-                edt_join_id.setBackgroundResource(R.drawable.gray_edittext);
-                //txtv_join_id.setText(null);
-                //edt_join_id.clearFocus();
-            }//아이디
-        } else if(edt_join_pw.hasFocus()) {
-            if (!Pattern.matches("(?=.*[a-zA-ZS])(?=.*?[\\?\\!\\@\\*]).{8,20}", edt_join_pw.getText().toString())) {
-                txtv_join_pw.setVisibility(View.VISIBLE);
-                txtv_join_pw.setText("형식이 올바르지 않습니다.");
-            } else {
-                txtv_join_pw.setText(null);
-                edt_join_pw.clearFocus();
-            }//비밀번호
-        } else if(edt_join_name.hasFocus()) {
-            if (!Pattern.matches("^[가-힣]{2,5}$", edt_join_name.getText().toString())) {
-                txtv_join_name.setVisibility(View.VISIBLE);
-                txtv_join_name.setText("형식이 올바르지 않습니다.");
-            } else {
-                txtv_join_name.setText(null);
-                edt_join_name.clearFocus();
-            }//이름
-        } else if(edt_join_email.hasFocus()) {
-            if (!Patterns.EMAIL_ADDRESS.matcher(edt_join_email.getText().toString()).matches()) {
-                txtv_join_email.setVisibility(View.VISIBLE);
-                txtv_join_email.setText("형식이 올바르지 않습니다.");
-            } else {
-                txtv_join_email.setText(null);
-                edt_join_email.clearFocus();
-            }//이메일
-        } else if(edt_join_tel.hasFocus()) {
-            // if (!Pattern.matches("^(010|011|016|017|018|019)\\d{3,4}\\d{4}$", edt_join_tel.getText().toString())) {
-            if (!Pattern.matches("^01(?:0|1|[6-9])\\d{3,4}\\d{4}$", edt_join_tel.getText().toString())) {
-                txtv_join_tel.setVisibility(View.VISIBLE);
-                txtv_join_tel.setText("형식이 올바르지 않습니다.");
-            } else {
-                txtv_join_tel.setText(null);
-                edt_join_tel.clearFocus();
-            }//연락처
-        } // if ~ else if ~ else*/
-    } // validityChk()
+    } // join_validityChk()
+
+    //---------------------- 마이페이지:정보수정 유효성 검사 ----------------------------
+    public void account_validityChk() {
+        EditText edt_account_name, edt_account_pw, edt_account_email, edt_account_tel;
+        TextView txtv_account_name, txtv_account_pw, txtv_account_email, txtv_account_tel;
+
+        txtv_account_name = findViewById(R.id.txtv_account_name);
+        txtv_account_pw = findViewById(R.id.txtv_account_pw);
+        txtv_account_email = findViewById(R.id.txtv_account_email);
+        txtv_account_tel = findViewById(R.id.txtv_account_tel);
+
+        edt_account_name = findViewById(R.id.edt_account_name);
+        edt_account_pw = findViewById(R.id.edt_account_pw);
+        edt_account_email = findViewById(R.id.edt_account_email);
+        edt_account_tel = findViewById(R.id.edt_account_tel);
+
+        if (Pattern.matches("(?=.*[a-zA-ZS])(?=.*?[\\?\\!\\@\\*]).{8,20}", edt_account_pw.getText().toString()) || edt_account_pw.length() == 0) {
+            txtv_account_pw.setText("");
+            edt_account_pw.setBackgroundResource(R.drawable.edt_border);
+        } else if(!Pattern.matches("(?=.*[a-zA-ZS])(?=.*?[\\?\\!\\@\\*]).{8,20}", edt_account_pw.getText().toString())) {
+            txtv_account_pw.setVisibility(View.VISIBLE);
+            txtv_account_pw.setText("형식이 올바르지 않습니다.");
+            edt_account_pw.setBackgroundResource(R.drawable.red_edittext);
+        } // 비밀번호
+
+        if (Pattern.matches("^[가-힣]{2,5}$", edt_account_name.getText().toString()) || edt_account_name.length() == 0) {
+            txtv_account_name.setText("");
+            edt_account_name.setBackgroundResource(R.drawable.edt_border);
+        } else if(!Pattern.matches("^[가-힣]{2,5}$", edt_account_name.getText().toString())) {
+            txtv_account_name.setVisibility(View.VISIBLE);
+            txtv_account_name.setText("형식이 올바르지 않습니다.");
+            edt_account_name.setBackgroundResource(R.drawable.red_edittext);
+        } // 이름
+
+        if (Patterns.EMAIL_ADDRESS.matcher(edt_account_email.getText().toString()).matches() || edt_account_email.length() == 0) {
+            txtv_account_email.setText("");
+            edt_account_email.setBackgroundResource(R.drawable.edt_border);
+        } else if(!Patterns.EMAIL_ADDRESS.matcher(edt_account_email.getText().toString()).matches()) {
+            txtv_account_email.setVisibility(View.VISIBLE);
+            txtv_account_email.setText("형식이 올바르지 않습니다.");
+            edt_account_email.setBackgroundResource(R.drawable.red_edittext);
+        } // 이메일
+
+        if (Pattern.matches("^01(?:0|1|[6-9])\\d{3,4}\\d{4}$", edt_account_tel.getText().toString()) || edt_account_tel.length() == 0) {
+            txtv_account_tel.setText("");
+            edt_account_tel.setBackgroundResource(R.drawable.edt_border);
+        } else if(!Pattern.matches("^01(?:0|1|[6-9])\\d{3,4}\\d{4}$", edt_account_tel.getText().toString())) {
+            txtv_account_tel.setVisibility(View.VISIBLE);
+            txtv_account_tel.setText("형식이 올바르지 않습니다.");
+            edt_account_tel.setBackgroundResource(R.drawable.red_edittext);
+        } // 전화번호
+    }//account_validityChk()
 
 
     // Fragment 내 EditText의 외부 클릭 즉, 포커스가 바뀌었을 때 키보드를 숨기기 위한 메소드
@@ -381,7 +391,8 @@ public class MainActivity extends AppCompatActivity
         return super.dispatchTouchEvent(ev);
     } // dispatchTouchEvent()
 
-    public void pwChk(String pwchk) {
+    // 회원가입 - 비밀번호 확인
+    public void joinPwChk(String pwchk) {
         EditText edt_join_pw;
         TextView txtv_join_pwchk;
         txtv_join_pwchk = findViewById(R.id.txtv_join_pwchk);
@@ -395,7 +406,24 @@ public class MainActivity extends AppCompatActivity
             txtv_join_pwchk.setVisibility(View.VISIBLE);
             txtv_join_pwchk.setText("비밀번호가 확인되었습니다.");
         } // if ~ else
-    } // pkChk()
+    } // pwChk()
+
+    // 마이페이지:정보수정 - 비밀번호 확인
+    public void accountPwChk(String pwchk) {
+        EditText edt_account_pw;
+        TextView txtv_account_pwchk;
+        txtv_account_pwchk = findViewById(R.id.txtv_account_pwchk);
+        edt_account_pw = findViewById(R.id.edt_account_pw);
+
+        String account_pw = edt_account_pw.getText().toString();
+        if(!pwchk.equals(account_pw)) {
+            txtv_account_pwchk.setVisibility(View.VISIBLE);
+            txtv_account_pwchk.setText("동일한 비밀번호를 입력하세요");
+        } else {
+            txtv_account_pwchk.setVisibility(View.VISIBLE);
+            txtv_account_pwchk.setText("비밀번호가 확인되었습니다.");
+        } // if ~ else
+    }//accountPwChk()
 
     // 키해시 얻기
     public String getKeyHash(){
