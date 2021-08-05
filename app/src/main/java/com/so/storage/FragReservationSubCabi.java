@@ -22,7 +22,6 @@ public class FragReservationSubCabi extends Fragment {
     CabiAdapter adapter;
     ArrayList<CabiDTO> dtos;
     private Context context;
-    Button btn_reser_cabi_back;
     MainActivity mActivity;
     FragReservationCheck fragReservationCheck;
 
@@ -31,7 +30,6 @@ public class FragReservationSubCabi extends Fragment {
 
         View view = inflater.inflate(R.layout.frag_reservation_sub_cabi, container, false);
         context = container.getContext();
-        btn_reser_cabi_back = view.findViewById(R.id.btn_reser_cabi_back);
         fragReservationCheck = new FragReservationCheck();
         mActivity = (MainActivity) getActivity();
         dtos = new ArrayList<>();//
@@ -85,14 +83,12 @@ public class FragReservationSubCabi extends Fragment {
             }
         });
 
-        btn_reser_cabi_back.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_reser_cabi_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.onBackPressed();
             }
         });
-
-
 
         return view;
     }

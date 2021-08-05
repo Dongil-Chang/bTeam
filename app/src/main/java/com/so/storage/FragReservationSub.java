@@ -41,7 +41,12 @@ public class FragReservationSub extends Fragment {
                 mActivity.onFragmentChange(fragReservationSubCabi);
             }
         });
-
+        rootView.findViewById(R.id.btn_reser_sub_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.onBackPressed();
+            }
+        });
         return rootView;
     } // onCreateView()
 }

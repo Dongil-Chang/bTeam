@@ -22,7 +22,6 @@ public class FragReservationSubBox extends Fragment {
     BoxAdapter adapter;
     ArrayList<BoxDTO> dtos;
     private Context context;
-    Button btn_reser_box_back;
     MainActivity mActivity;
     FragReservationCheck fragReservationCheck;
 
@@ -31,7 +30,6 @@ public class FragReservationSubBox extends Fragment {
 
         View view = inflater.inflate(R.layout.frag_reservation_sub_box, container, false);
         context = container.getContext();
-        btn_reser_box_back = view.findViewById(R.id.btn_reser_box_back);
         fragReservationCheck = new FragReservationCheck();
         mActivity = (MainActivity) getActivity();
         dtos = new ArrayList<>();//
@@ -85,7 +83,7 @@ public class FragReservationSubBox extends Fragment {
             }
         });
 
-        btn_reser_box_back.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_reser_box_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.onBackPressed();

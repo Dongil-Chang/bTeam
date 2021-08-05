@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="110dp"
+            android:layout_marginBottom="80dp"
             android:text="[ 항목선택 ]"
             android:textSize="25dp"
             android:layout_gravity="center"
@@ -43,7 +43,15 @@
             android:backgroundTint="#89CFCE"
             android:src="@drawable/cabi"
             android:scaleType="fitCenter"/>
-
+        <Button
+            android:layout_height="50dp"
+            android:layout_width="150dp"
+            android:layout_gravity="left"
+            android:text="◀ 이전단계로"
+            android:backgroundTint="#DDC1F2EE"
+            android:id="@+id/btn_reser_sub_back"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="15dp"/>
 
     </LinearLayout>
 

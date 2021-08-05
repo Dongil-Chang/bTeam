@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
     FragReservationSubCabi fragReservationSubCabi;
     FragMgMemberList fragMgMemberList;
     FragNotice fragNotice;
-    int callNum = 7;
+    int callNum;
     private View header;
 
     // Fragment selected = null;   fragment 전환 시 사용할 변수
