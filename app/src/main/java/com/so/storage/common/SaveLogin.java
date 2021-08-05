@@ -27,11 +27,12 @@ public class SaveLogin {
     }
 
     public String saveUserInfo(Context context) {
-        String login_id = "", login_pw = "", login_name = "";
+        String login_id = "", login_pw = "", login_name = "", login_subcode ="";
         if(loginDTO != null) {
             login_id = loginDTO.getId();
             login_pw = loginDTO.getPw();
             login_name = loginDTO.getName();
+            login_subcode = loginDTO.getSubcode(); // 추가 (08/03)
         }
         SharedPreferences.Editor editor = getSharePreferences(context).edit();
         //editor.putString("id", login_user);
@@ -39,6 +40,7 @@ public class SaveLogin {
         editor.putString("id", login_id);
         editor.putString("pw", login_pw);
         editor.putString("name", login_name);
+        editor.putString("subcode",login_subcode); // 추가 (08/03)
         editor.apply();
         return login_id;
     }
