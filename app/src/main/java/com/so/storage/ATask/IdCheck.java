@@ -26,6 +26,8 @@ import static com.so.storage.common.CommonMethod.project_path;
 public class IdCheck extends AsyncTask<Void, Void, Void> {
 
     String id;
+    // 아래 추가 (08/04 15:03)
+    boolean response = false;
 
     //Spring 연결시 Http 통신할 때 필요한 것들
     HttpClient httpClient; //클라이언트 설정부분
@@ -65,9 +67,14 @@ public class IdCheck extends AsyncTask<Void, Void, Void> {
         //값을 Spring에서 받아오는 부분
         httpEntity = httpResponse.getEntity();
         //entity 이용해서 값을 받아오고 그리고 html로 리턴된 부분을 getContent이용해서받아옴
+
+
         inputStream = httpEntity.getContent();
 
+
         loginDTO = readMessage(inputStream);
+
+
         inputStream.close();
 
         } catch (IOException e) {

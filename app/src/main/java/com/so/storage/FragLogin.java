@@ -137,6 +137,7 @@ public class FragLogin extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } //try
+
             }
         });
 

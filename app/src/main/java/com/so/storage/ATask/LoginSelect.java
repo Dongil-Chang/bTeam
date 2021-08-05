@@ -34,6 +34,7 @@ public class LoginSelect extends AsyncTask<Void, Void, String> {
 
     //Spring 연결시 Http 통신할 때 필요한 것들
     //HttpURLConnection
+
     HttpClient httpClient; //클라이언트 설정부분
     HttpPost httpPost; //Url 맵핑이 들어가는 곳
     HttpResponse httpResponse; //실제 요청하는 곳

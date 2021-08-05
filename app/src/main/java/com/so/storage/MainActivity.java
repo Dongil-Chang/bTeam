@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity
         }
         // if ~ else if
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag ).addToBackStack(null).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.container, frag ).commit();
         // 공통 코드 정리 및 .addToBackStack(null) 추가 기입
     } // onFragmentChange()
 
