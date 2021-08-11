@@ -20,6 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 android:src="@drawable/step1"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,12 +30,29 @@
                 android:layout_gravity="center"
                 android:textColor="#000000"/>
 
-
-            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                android:id="@+id/mcv_calendar_reser"
+            <EditText
+                android:id="@+id/reser_booking_start"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:mcv_selectionColor="#DDC1F2EE"/>
+                android:gravity="center"
+                android:text="시작날짜를 선택해주세요"
+                android:textSize="23dp"
+                android:clickable="true"
+                android:focusable="false"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="40dp"/>
+
+
+            <EditText
+                android:id="@+id/reser_booking_end"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="종료날짜를 선택해주세요"
+                android:textSize="23dp"
+                android:clickable="true"
+                android:focusable="false"/>
+
 
             <Button
                 android:id="@+id/btn_reser_main"
@@ -44,7 +62,7 @@
                 android:backgroundTint="#DDC1F2EE"
                 android:layout_gravity="right"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="120dp"
                 />
         </LinearLayout>
     </ScrollView>
