@@ -38,7 +38,7 @@
         android:gravity="center"/>
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/autoLogin"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:text="자동로그인"

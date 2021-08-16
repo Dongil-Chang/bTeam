@@ -3,14 +3,17 @@ package com.so.storage;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +44,9 @@ public class FragLogin extends Fragment {
     OAuthLogin mOAuthLoginModule;
     Context mContext;
     ImageButton naver_login,kakao_login;
+    Switch autoLogin;
+
+    boolean autoLogin_state = false;
 
     @Nullable
     @Override
@@ -63,6 +69,7 @@ public class FragLogin extends Fragment {
         naver_login = rootView.findViewById(R.id.naver_login);
         kakao_login = rootView.findViewById(R.id.kakao_login);
 
+        autoLogin = rootView.findViewById(R.id.autoLogin);
 
         //회원가입버튼
         btn_login_join.setOnClickListener(new View.OnClickListener() {
@@ -103,11 +110,9 @@ public class FragLogin extends Fragment {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MemberUserDTO dto = new MemberUserDTO();
                 String id = edt_login_id.getText().toString();
                 String pw = edt_login_pw.getText().toString();
-                //dto.setId(id);
-                //dto.setPw(pw);
+
                 LoginSelect loginSelect = new LoginSelect(id, pw);
                 try {
                     String result = loginSelect.execute().get();
@@ -116,10 +121,36 @@ public class FragLogin extends Fragment {
                     //if(!loginDTO.getId().equals("")) {
                     if(loginDTO != null) {
                         if (id.equals(loginDTO.getId()) && pw.equals(loginDTO.getPw())) {
+
+                            //자동로그인 - on
+                            autoLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    if (isChecked) {
+                                        setAutoLogin();
+                                        autoLogin_state = true;
+                                    }
+                                }
+                            }); //자동로그인 switch
+
+                            //자동로그인 - off
+                            if (!autoLogin.isChecked()) {
+                                edt_reset();
+                            }
+
+                            Log.d(TAG, "autologin: "+autoLogin.isChecked());
+
                             Snackbar.make(v, "로그인 되었습니다.", Snackbar.LENGTH_LONG).show();
+
                             mActivity.onFragmentChange(fragMainPage);
                             SaveLogin saveLogin = new SaveLogin();
-                            saveLogin.saveUserInfo(mActivity);
+                            SharedPreferences.Editor subcode = saveLogin.saveUserInfo(mActivity);
+                            int loginstate = 1;
+                            mActivity.menuOnOff(subcode.toString(), loginstate);
+                            mActivity.LogoutBtnOn();
+                            mActivity.LoginState(loginstate);
+                            Log.d(TAG, "login: "+loginDTO.getId());
+
                         } else if(!id.equals(loginDTO.getId()) || !pw.equals(loginDTO.getPw())){
                             Snackbar.make(v, "아이디, 비밀번호를 확인하세요.", Snackbar.LENGTH_LONG).show();
                             edt_login_id.setText("");
@@ -227,6 +258,31 @@ public class FragLogin extends Fragment {
         }); // btn_login_back
         return rootView;
     } // onCreateView
+
+    //자동로그인 세팅 메소드
+    public void setAutoLogin() {
+        SaveLogin saveLogin = new SaveLogin();
+
+        //Boolean saveautologin = autoLogin.isChecked();
+        Boolean saveautologin = autoLogin.isChecked();
+        saveLogin.saveAutoLogin(mActivity, saveautologin);
+
+        Boolean getautologin = saveLogin.getAutoLogin(mActivity);
+        if (getautologin) {
+            //String user_id = saveLogin.getUserId(mActivity);
+            //String user_pw = saveLogin.getUserPw(mActivity);
+            String user_id = loginDTO.getId();
+            String user_pw = loginDTO.getPw();
+            edt_login_id.setText(user_id);
+            edt_login_pw.setText(user_pw);
+        }
+    }
+
+    //로그아웃 이후에도 editText에 남아있는 입력값을 제거하는 메소드
+    public void edt_reset() {
+        edt_login_id.setText("");
+        edt_login_pw.setText("");
+    }
 
 } // class
 

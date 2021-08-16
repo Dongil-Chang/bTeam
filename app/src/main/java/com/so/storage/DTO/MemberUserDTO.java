@@ -6,6 +6,16 @@ public class MemberUserDTO {
 
     public MemberUserDTO(){}
 
+    public MemberUserDTO(String id, String pw, String name, String email, String addr, String tel, String birth) {
+        this.id = id;
+        this.pw = pw;
+        this.name = name;
+        this.email = email;
+        this.addr = addr;
+        this.tel = tel;
+        this.birth = birth;
+    }
+
     public MemberUserDTO(String id, String pw, String name, String email, String tel) {
         super();
         this.id = id;

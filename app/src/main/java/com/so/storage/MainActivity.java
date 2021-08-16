@@ -1,6 +1,7 @@
 package com.so.storage;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.so.storage.DTO.MemberUserDTO;
 import com.so.storage.Manager.FragMgMemberList;
 import com.so.storage.common.SaveLogin;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawerLayout;
     Button btn_login;
     Button btn_logout;
+    Switch autoLogin;
     Toolbar toolbar;
     FragLogin fragLogin;
     FragJoin fragJoin;
@@ -59,11 +63,11 @@ public class MainActivity extends AppCompatActivity
     FragReservationSubCabi fragReservationSubCabi;
     FragMgMemberList fragMgMemberList;
     FragNotice fragNotice;
+    MyAccountSubFrag fragAccountSub;
     int callNum;
     private View header;
 
     // Fragment selected = null;   fragment 전환 시 사용할 변수
-
 
     // Navigation Drawer 가 열린 상태에서 뒤로가기 버튼 클릭시 앱이 종료되는 것을 방지하고
     // 드로어가 열린 상태에서 뒤로가기 버튼 클릭시 드로어가 닫히도록 처리
@@ -94,6 +98,11 @@ public class MainActivity extends AppCompatActivity
         fragReservationSubCabi = new FragReservationSubCabi();
         fragMgMemberList = new FragMgMemberList();
         fragNotice = new FragNotice();
+        fragAccountSub = new MyAccountSubFrag();
+
+        autoLogin = findViewById(R.id.autoLogin);
+
+
         Log.d("GET_KEYHASH",getKeyHash());
 
         // Main
@@ -145,6 +154,14 @@ public class MainActivity extends AppCompatActivity
         btn_login = (Button) header.findViewById(R.id.btn_login);
         btn_logout = (Button) header.findViewById(R.id.btn_logout);
 
+        //비로그인 상태일 때 - 드로어바 하단 메뉴 보이지 않음
+        String subcode = "0";
+        if (subcode.equals("0")){
+            navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
+            navigationView.getMenu().findItem(R.id.managerinfo).setVisible(false);
+            Log.d(TAG, "subcode: "+subcode);
+        }
+
         // 로그인 버튼 클릭시
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,17 +169,6 @@ public class MainActivity extends AppCompatActivity
               /*Intent intent = new Intent( MainActivity.this ,GuideActivity.class);
               startActivity(intent);*/
                 onFragmentChange(fragLogin);
-
-                //-----------------로그인시 로그인 버튼 로그아웃으로 바꾸는 처리(안됨) -----------
-                SaveLogin saveLogin = new SaveLogin();
-                String saveuserinfo = saveLogin.saveUserInfo(MainActivity.this);
-
-                if(!saveuserinfo.isEmpty()) {
-                    Log.d(TAG, saveuserinfo);
-
-                    btn_login.setVisibility(View.GONE);
-                    btn_logout.setVisibility(View.VISIBLE);
-                }
                 drawerLayout.closeDrawers(); // 추가 : drawerlayout 닫기
 
             } // (btn_login) onClick
@@ -174,29 +180,82 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 SaveLogin saveLogin = new SaveLogin();
 
-                String logOut = saveLogin.logout(getApplicationContext());
+                SharedPreferences.Editor logOut = saveLogin.logout(getApplicationContext());
+                //boolean saveautologin = saveLogin.saveAutoLogin(MainActivity.this, autoLogin.isChecked());
+                if(logOut != null) {
+                    int loginstate = 0;
+                    LoginState(loginstate);
+                    menuOnOff("0", loginstate);
+
+                    //자동로그인 off - loginDTO 를 비워 로그인정보 삭제(로그인정보 기억X)
+                    if (!fragLogin.autoLogin.isChecked()) {
+                        loginDTO = null;
+                    }
+
+                    Log.d(TAG, "logout: "+loginDTO);
+                }
+
+                Snackbar.make(v, "로그아웃 되었습니다.", Snackbar.LENGTH_SHORT).show();
                 btn_logout.setVisibility(View.GONE);
                 btn_login.setVisibility(View.VISIBLE);
                 drawerLayout.closeDrawers();
-                Log.d(TAG, logOut+"null");
+
+                onFragmentChange(fragMainPage);
             }
         });
 
-        int userLevel  = 1;
-        String loginID = "admin";
-        View headerView = navigationView.getHeaderView(0);
+    }
 
-        if (userLevel == 0){
-            navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
-            navigationView.getMenu().findItem(R.id.managerinfo).setVisible(false);
-        }else if(userLevel == 1){
-            navigationView.getMenu().findItem(R.id.myinfo).setVisible(true);
-            navigationView.getMenu().findItem(R.id.managerinfo).setVisible(false);
-        }else if(userLevel == 2){
-            navigationView.getMenu().findItem(R.id.managerinfo).setVisible(true);
-            navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
+    //로그인된 상태인지 아닌지 판단
+    public int LoginState(int loginstate) {
+        SaveLogin saveLogin = new SaveLogin();
+        SharedPreferences.Editor saveuserinfo = saveLogin.saveUserInfo(MainActivity.this);
+        SharedPreferences.Editor logOut = saveLogin.logout(MainActivity.this);
+
+        if(saveuserinfo == null) {
+            loginstate = 0;
+        }
+        return loginstate;
+    }
+
+    //로그인 시, 로그인 버튼이 로그아웃 버튼으로 바뀌는 메소드
+    public void LogoutBtnOn() {
+        SaveLogin saveLogin = new SaveLogin();
+        SharedPreferences.Editor saveuserinfo = saveLogin.saveUserInfo(MainActivity.this);
+
+        if(saveuserinfo != null) {
+            //Log.d(TAG, String.valueOf(saveuserinfo));
+
+            btn_login.setVisibility(View.GONE);
+            btn_logout.setVisibility(View.VISIBLE);
         }
     }
+
+    //내비게이션 바 - 비로그인/사용자/관리자별 메뉴 호출 메소드
+    public void menuOnOff(String subcode, int loginstate) {
+        SaveLogin saveLogin = new SaveLogin();
+        SharedPreferences.Editor saveuserinfo = saveLogin.saveUserInfo(MainActivity.this);
+        subcode = saveLogin.getSubCode(MainActivity.this);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if(saveuserinfo != null && loginstate == 1) {
+            if(subcode.trim().equals("1")){
+                navigationView.getMenu().findItem(R.id.myinfo).setVisible(true);
+                navigationView.getMenu().findItem(R.id.managerinfo).setVisible(false);
+
+            }else if(subcode.trim().equals("3")){
+                navigationView.getMenu().findItem(R.id.managerinfo).setVisible(true);
+                navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
+            }
+        }
+
+        if(loginstate == 0) {
+            navigationView.getMenu().findItem(R.id.myinfo).setVisible(false);
+            navigationView.getMenu().findItem(R.id.managerinfo).setVisible(false);
+        }
+    }//menuOnOff
 
     // Fragment 이동 메소드
     public void onFragmentChange(Fragment frag) {
@@ -212,6 +271,7 @@ public class MainActivity extends AppCompatActivity
         } else if (frag.equals(fragPrntInfoUse)) {
         } else if (frag.equals(fragMgMemberList)) {
         } else if (frag.equals(fragNotice)) {
+        } else if (frag.equals(fragAccountSub)) {
         }
         // if ~ else if
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag ).addToBackStack(null).commit();
@@ -249,6 +309,8 @@ public class MainActivity extends AppCompatActivity
         else if(id == R.id.nav_mypage){
             Toast.makeText(this, "마이페이지 눌림", Toast.LENGTH_SHORT).show();
             onFragmentChange(fragPrntMyPage);
+        } else if(id == R.id.nav_memberlist) {
+            onFragmentChange(fragMgMemberList);
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);

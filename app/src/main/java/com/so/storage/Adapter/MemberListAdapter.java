@@ -16,10 +16,13 @@ public class MemberListAdapter extends BaseAdapter {
 
     private ArrayList<MemberUserDTO> dtos = new ArrayList<>();
     private MemberUserDTO dto;
+    private Context aContext;
 
-    public MemberListAdapter(MemberUserDTO dto) {
-        this.dto = dto;
+    public MemberListAdapter(Context aContext, ArrayList<MemberUserDTO> dtos) {
+        this.aContext = aContext;
+        this.dtos = dtos;
     }
+
 
     public MemberListAdapter() {}
 

@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -165,6 +164,8 @@ public class FragJoin extends Fragment {
                     Snackbar.make(v, "형식에 맞게 입력하셔야 합니다.", Snackbar.LENGTH_LONG).show();
                 } else if(txtv_join_pwchk.getText().toString().equals("동일한 비밀번호를 입력하세요")) {
                     Snackbar.make(v, "비밀번호가 일치하지 않습니다.", Snackbar.LENGTH_LONG).show();
+                } else if(txtv_join_pwchk.getText().toString().isEmpty()) {
+                    Snackbar.make(v, "비밀번호를 확인하지 않으셨습니다.", Snackbar.LENGTH_LONG).show();
                 } else if(!chkBox_join_agree1.isChecked() || !chkBox_join_agree2.isChecked()) {
                     Snackbar.make(v, "이용약관에 모두 동의해주셔야 합니다.", Snackbar.LENGTH_LONG).show();
                 } else {

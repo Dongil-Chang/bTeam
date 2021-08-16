@@ -2,10 +2,6 @@ package com.so.storage.ATask;
 
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
-import android.util.JsonReader;
-import android.util.Log;
-
-import com.so.storage.DTO.MemberUserDTO;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,7 +13,6 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import static com.so.storage.MainActivity.loginDTO;
 import static com.so.storage.common.CommonMethod.ipconfig;
@@ -47,36 +42,36 @@ public class LeaveDelete extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... voids) {
         //Multipart 빌더를 생성
         try {
-        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-        //문자열 및 데이터 (조회 조건이나 insert시 필요한 데이터들을 넘길 때)
-        //Android -> Spring 으로 가는 데이터
-        builder.addTextBody("id", id, ContentType.create("Multipart/related","UTF-8"));
+            //문자열 및 데이터 (조회 조건이나 insert시 필요한 데이터들을 넘길 때)
+            //Android -> Spring 으로 가는 데이터
+            builder.addTextBody("id", id, ContentType.create("Multipart/related","UTF-8"));
 
-        //Url 만들기
-        String postURL = ipconfig + project_path + "/and_leave"; //바꿔줘야함
+            //Url 만들기
+            String postURL = ipconfig + project_path + "/and_leave"; //바꿔줘야함
 
-        InputStream inputStream = null;
-        httpClient = AndroidHttpClient.newInstance("Android");
-        //접속할 Url 초기화
-        httpPost = new HttpPost(postURL);
-        //조회 조건이나 데이터 설정들 넘겨줌
-        httpPost.setEntity(builder.build());
+            InputStream inputStream = null;
+            httpClient = AndroidHttpClient.newInstance("Android");
+            //접속할 Url 초기화
+            httpPost = new HttpPost(postURL);
+            //조회 조건이나 데이터 설정들 넘겨줌
+            httpPost.setEntity(builder.build());
 
-        //실제 Spring Url을 요청하는 부분
-        httpResponse = httpClient.execute(httpPost);
+            //실제 Spring Url을 요청하는 부분
+            httpResponse = httpClient.execute(httpPost);
 
-       //값을 Spring에서 받아오는 부분
-        httpEntity = httpResponse.getEntity();
-        //entity 이용해서 값을 받아오고 그리고 html로 리턴된 부분을 getContent이용해서받아옴
-        inputStream = httpEntity.getContent();
+            //값을 Spring에서 받아오는 부분
+            httpEntity = httpResponse.getEntity();
+            //entity 이용해서 값을 받아오고 그리고 html로 리턴된 부분을 getContent이용해서받아옴
+        /*inputStream = httpEntity.getContent();
             Log.d(TAG, "doInBackground: "+inputStream);
 
         loginDTO = readMessage(inputStream);
             Log.d(TAG, "doInBackground: "+loginDTO.getEmail());
 
-        inputStream.close();
+        inputStream.close();*/
 
         } catch (IOException e) {
             loginDTO = null;
@@ -105,7 +100,7 @@ public class LeaveDelete extends AsyncTask<Void, Void, String> {
         super.onPostExecute(result);
     }
 
-    private MemberUserDTO readMessage(InputStream inputStream) throws IOException {
+    /*private MemberUserDTO readMessage(InputStream inputStream) throws IOException {
 
         JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
 
@@ -168,5 +163,5 @@ public class LeaveDelete extends AsyncTask<Void, Void, String> {
         Log.d(TAG, "readMessage: " + member_code + ", " +id + ", " +pw + ", " +name + ", " +email + ", " +addr + ", " +tel + ", " +birth);
         return new MemberUserDTO(member_code, id, pw, name, email, addr, tel, birth, naver_login, kakao_login, commcode, subcode);
         //리턴할 때 초기값 줘야 함. null 처리
-    }
+    }*/
 }

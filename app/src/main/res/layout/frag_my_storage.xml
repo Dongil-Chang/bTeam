@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/mystorage_name"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:text="(사용자이름)님의 창고 상태"
