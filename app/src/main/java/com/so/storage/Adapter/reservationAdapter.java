@@ -80,18 +80,19 @@ public class reservationAdapter extends BaseAdapter {
             }
         });
 
-        TextView product_type, booking_start, booking_end, location_id;
+        TextView product_id, product_type, booking_start, booking_end;
+        product_id = (TextView) convertView.findViewById(R.id.product_id);
         product_type = (TextView) convertView.findViewById(R.id.product_type);
         booking_start = (TextView) convertView.findViewById(R.id.booking_start);
         booking_end = (TextView) convertView.findViewById(R.id.booking_end);
-        location_id = (TextView) convertView.findViewById(R.id.location_id);
 
         ReservationDTO dto = dtos.get(position);
 
+        product_id.setText(dto.getProduct_id());
         product_type.setText(dto.getProduct_type());
         booking_start.setText(dto.getBooking_start());
         booking_end.setText(dto.getBooking_end());
-        location_id.setText(dto.getLocation_id());
+
 
         return convertView;
     }

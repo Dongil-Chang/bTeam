@@ -13,7 +13,7 @@ public class ReservationFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_reservation, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.frag_reservation_date, container, false);
 
         return rootView;
     }

@@ -1,25 +1,15 @@
 package com.so.storage.DTO;
 
 public class CabiDTO {
-    public int cabi_img;
     public String cabi_name, cabi_info;
-    public int color_img, click_img;
+    public int color_img;
 
+    public CabiDTO(){}
 
-    public CabiDTO(int cabi_img, String cabi_name, String cabi_info, int color_img, int click_img) {
-        this.cabi_img = cabi_img;
+    public CabiDTO(String cabi_name, String cabi_info, int color_img) {
         this.cabi_name = cabi_name;
         this.cabi_info = cabi_info;
         this.color_img = color_img;
-        this.click_img = click_img;
-    }
-
-    public int getCabi_img() {
-        return cabi_img;
-    }
-
-    public void setCabi_img(int cabi_img) {
-        this.cabi_img = cabi_img;
     }
 
     public String getCabi_name() {
@@ -44,13 +34,5 @@ public class CabiDTO {
 
     public void setColor_img(int color_img) {
         this.color_img = color_img;
-    }
-
-    public int getClick_img() {
-        return click_img;
-    }
-
-    public void setClick_img(int click_img) {
-        this.click_img = click_img;
     }
 }

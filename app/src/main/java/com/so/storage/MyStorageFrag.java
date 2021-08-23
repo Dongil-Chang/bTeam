@@ -49,7 +49,7 @@ public class MyStorageFrag extends Fragment {
         mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
         mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 브라우저 캐시 허용 여부
         mWebSettings.setDomStorageEnabled(true); // 로컬저장소 허용 여부
-        mWebView.loadUrl("https://www.naver.com"); // 웹뷰에 표시할 라즈베리파이 주소, 웹뷰 시작
+        mWebView.loadUrl("192.168.0.121:8000"); // 웹뷰에 표시할 라즈베리파이 주소, 웹뷰 시작
 //        mWebView.loadUrl("221.144.89.105:8003"); // 웹뷰에 표시할 라즈베리파이 주소, 웹뷰 시작
 
         justcheckBtn_1 = rootView.findViewById(R.id.justcheckBtn_1);

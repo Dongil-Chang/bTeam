@@ -74,16 +74,9 @@
                         android:id="@+id/reser_imgv_cabi_change"
                         android:src="@drawable/ic_launcher_background"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
-                        android:layout_toLeftOf="@+id/reser_imgv_cabi_click" />
+                        android:layout_marginRight="20dp"
+                        android:layout_alignParentRight="true"/>
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/reser_imgv_cabi_click"
-                        android:src="@drawable/click"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true" />
 
                 </RelativeLayout>
             </LinearLayout>

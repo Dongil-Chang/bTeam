@@ -1,6 +1,5 @@
 package com.so.storage;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -97,6 +95,7 @@ public class MyAccountFrag extends Fragment {
             edt_account_name.setText(loginDTO.getName());
             edt_account_email.setText(loginDTO.getEmail());
             edt_account_tel.setText(loginDTO.getTel());
+            txtv_account_birth.setText(loginDTO.getBirth());
         } else {
             myaccount_name.setText(null);
         }
@@ -158,8 +157,8 @@ public class MyAccountFrag extends Fragment {
                                     edt_account_pw.getText().toString(),
                                     edt_account_name.getText().toString(),
                                     edt_account_email.getText().toString(),
-                                    edt_account_tel.getText().toString(),
                                     addr,
+                                    edt_account_tel.getText().toString(),
                                     txtv_account_birth.getText().toString()
                             );
                             AccountUpdate accountUpdate = new AccountUpdate(dto);

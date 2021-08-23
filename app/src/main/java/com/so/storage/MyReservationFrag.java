@@ -35,8 +35,8 @@ public class MyReservationFrag extends Fragment {
 
         adapter = new reservationAdapter();
 
-        adapter.addDto(new ReservationDTO("C3", "2021/07/01", "2021/09/01", "광주점"));
-        adapter.addDto(new ReservationDTO("B3", "2021/07/01", "2021/09/01", "광주점"));
+        adapter.addDto(new ReservationDTO("C","C3", "2021/07/01", "2021/09/01"));
+        adapter.addDto(new ReservationDTO("B","B3", "2021/07/01", "2021/09/01"));
 
         listv_reservation.setAdapter(adapter);
 

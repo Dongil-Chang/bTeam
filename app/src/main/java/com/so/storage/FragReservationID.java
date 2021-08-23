@@ -9,36 +9,43 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class FragReservationSub extends Fragment {
+import static com.so.storage.MainActivity.reservationDTO;
+
+
+public class FragReservationID extends Fragment {
 
     MainActivity mActivity;
     ViewGroup rootView;
-    FragReservationSubBox fragReservationSubBox;
-    FragReservationSubCabi fragReservationSubCabi;
+   // FragReservationBox fragReservationBox;
+  //  FragReservationCabi fragReservationCabi;
+    FragReservationType fragReservationType;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(R.layout.frag_reservation_sub, container, false);
+        rootView = (ViewGroup) inflater.inflate(R.layout.frag_reservation_id, container, false);
         mActivity = (MainActivity) getActivity();
-        fragReservationSubBox = new FragReservationSubBox();
-        fragReservationSubCabi = new FragReservationSubCabi();
+     //   fragReservationBox = new FragReservationBox();
+    //    fragReservationCabi = new FragReservationCabi();
+        fragReservationType = new FragReservationType();
 
         rootView.findViewById(R.id.btn_box).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(ReservationActivity.this, ReservationSubBox.class);
-                startActivity(intent);*/
-                mActivity.onFragmentChange(fragReservationSubBox);
+                String box = "Box";
+                reservationDTO.setProduct_id(box);
+                //Toast.makeText(getActivity(), reservationDTO.getProduct_id(), Toast.LENGTH_SHORT).show();
+                mActivity.onFragmentChange(fragReservationType);
             }
         });
 
         rootView.findViewById(R.id.btn_cabi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(ReservationActivity.this, ReservationSubCabi.class);
-                startActivity(intent);*/
-                mActivity.onFragmentChange(fragReservationSubCabi);
+                String cabi = "Cabi";
+                reservationDTO.setProduct_id(cabi);
+                mActivity.onFragmentChange(fragReservationType);
+
             }
         });
         rootView.findViewById(R.id.btn_reser_sub_back).setOnClickListener(new View.OnClickListener() {

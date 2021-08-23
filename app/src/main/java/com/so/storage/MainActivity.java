@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.so.storage.DTO.MemberUserDTO;
+import com.so.storage.DTO.ReservationDTO;
 import com.so.storage.Manager.FragMgMemberList;
 import com.so.storage.common.SaveLogin;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "main:";
     public static MemberUserDTO loginDTO = null;
+    public static ReservationDTO reservationDTO = new ReservationDTO();
 
     TextView mystorage_name;
     DrawerLayout drawerLayout;
@@ -53,14 +55,15 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     FragLogin fragLogin;
     FragJoin fragJoin;
-    FragReservation fragReservation;
+    FragReservationDate fragReservationDate;
     FragPrntIdPwFind fragPrntIdPwFind;
     FragPrntMyPage fragPrntMyPage;
     FragPrntInfoUse fragPrntInfoUse;
     MyAccountFrag fragAccount;
     FragMainPage fragMainPage;
-    FragReservationSubBox fragReservationSubBox;
-    FragReservationSubCabi fragReservationSubCabi;
+    FragReservationBox fragReservationBox;
+    FragReservationCabi fragReservationCabi;
+    FragReservationType fragReservationType;
     FragMgMemberList fragMgMemberList;
     FragNotice fragNotice;
     MyAccountSubFrag fragAccountSub;
@@ -88,17 +91,18 @@ public class MainActivity extends AppCompatActivity
 
         fragLogin = new FragLogin();
         fragJoin = new FragJoin();
-        fragReservation = new FragReservation();
+        fragReservationDate = new FragReservationDate();
         fragPrntIdPwFind = new FragPrntIdPwFind();
         fragPrntMyPage = new FragPrntMyPage(callNum);
         fragPrntInfoUse = new FragPrntInfoUse();
         fragAccount = new MyAccountFrag();
         fragMainPage = new FragMainPage();
-        fragReservationSubBox = new FragReservationSubBox();
-        fragReservationSubCabi = new FragReservationSubCabi();
+        fragReservationBox = new FragReservationBox();
+        fragReservationCabi = new FragReservationCabi();
         fragMgMemberList = new FragMgMemberList();
         fragNotice = new FragNotice();
         fragAccountSub = new MyAccountSubFrag();
+        fragReservationType = new FragReservationType();
 
         autoLogin = findViewById(R.id.autoLogin);
 
@@ -261,17 +265,18 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentChange(Fragment frag) {
         if(frag.equals(fragLogin)) {
         } else if(frag.equals(fragJoin)) {
-        } else if(frag.equals(fragReservation)) {
+        } else if(frag.equals(fragReservationDate)) {
         } else if(frag.equals(fragPrntIdPwFind)) {
         } else if(frag.equals(fragPrntMyPage)) {
         } else if(frag.equals(fragAccount)) {
         } else if (frag.equals(fragMainPage)) {
-        } else if (frag.equals(fragReservationSubBox)) {
-        } else if (frag.equals(fragReservationSubCabi)) {
+        } else if (frag.equals(fragReservationBox)) {
+        } else if (frag.equals(fragReservationCabi)) {
         } else if (frag.equals(fragPrntInfoUse)) {
         } else if (frag.equals(fragMgMemberList)) {
         } else if (frag.equals(fragNotice)) {
         } else if (frag.equals(fragAccountSub)) {
+        } else if (frag.equals(fragReservationType)) {
         }
         // if ~ else if
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag ).addToBackStack(null).commit();
@@ -289,7 +294,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if(id == R.id.nav_reservation) {
             Toast.makeText(this, "예약하기 눌림", Toast.LENGTH_SHORT).show();
-            onFragmentChange(fragReservation);
+            onFragmentChange(fragReservationDate);
         }
         else if(id == R.id.nav_notice){
             Toast.makeText(this, "공지사항 눌림", Toast.LENGTH_SHORT).show();
